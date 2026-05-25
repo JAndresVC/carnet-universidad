@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Carné ULACIT">
+    <title>Carné Digital · ULACIT</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Librerías locales — funcionan sin internet -->
+    <script src="assets/js/qrcode.min.js"></script>
+    <script src="assets/js/html2canvas.min.js"></script>
+</head>
+<body>
+
+<!-- ═══════════════════
+     CARD SCENE
+════════════════════ -->
+<div class="card-scene" id="cardScene" onclick="flipCard()">
+    <div class="card-inner" id="cardInner">
+
+        <!-- FRENTE -->
+        <div class="card-face card-front">
+            <!-- Patrón geométrico de fondo (motivo del logo ULACIT) -->
+            <svg class="front-geo" viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- 4 cuadrantes del ícono ULACIT -->
+                <rect x="0"   y="0"   width="120" height="120" rx="8" stroke="white" stroke-width="2" fill="none"/>
+                <rect x="140" y="0"   width="120" height="120" rx="8" stroke="white" stroke-width="2" fill="none"/>
+                <rect x="0"   y="140" width="120" height="120" rx="8" stroke="white" stroke-width="2" fill="none"/>
+                <rect x="140" y="140" width="120" height="120" rx="8" stroke="white" stroke-width="2" fill="none"/>
+                <!-- Detalle interior top-left -->
+                <path d="M30 60 L60 30 L90 60" stroke="white" stroke-width="2" fill="none"/>
+                <rect x="40" y="70" width="40" height="30" rx="3" stroke="white" stroke-width="1.5" fill="none"/>
+                <!-- Detalle interior top-right -->
+                <circle cx="200" cy="60" r="24" stroke="white" stroke-width="1.5" fill="none"/>
+                <line x1="200" y1="36" x2="200" y2="84" stroke="white" stroke-width="1.5"/>
+                <line x1="176" y1="60" x2="224" y2="60" stroke="white" stroke-width="1.5"/>
+                <!-- Grid lines bottom-left -->
+                <line x1="20"  y1="200" x2="100" y2="200" stroke="white" stroke-width="1.5"/>
+                <line x1="20"  y1="220" x2="100" y2="220" stroke="white" stroke-width="1.5"/>
+                <line x1="40"  y1="155" x2="40"  y2="255" stroke="white" stroke-width="1.5"/>
+                <line x1="80"  y1="155" x2="80"  y2="255" stroke="white" stroke-width="1.5"/>
+                <!-- Corner box bottom-right -->
+                <rect x="155" y="155" width="50" height="50" rx="4" stroke="white" stroke-width="1.5" fill="none"/>
+                <rect x="170" y="170" width="20" height="20" rx="2" stroke="white" stroke-width="1.5" fill="none"/>
+            </svg>
+
+            <div class="front-colorbar"></div>
+
+            <div class="front-content">
+                <!-- Encabezado: logo + badge -->
+                <div class="front-header">
+                    <div class="logo-container">
+                        <span style="font-size:20px; font-weight:900; color:white; letter-spacing:3px; font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;">ULACIT</span>
+                    </div>
+                    <div class="badge-estudiante">Carné Estudiantil</div>
+                </div>
+
+                <!-- Cuerpo: foto + datos -->
+                <div class="front-body">
+                    <div class="photo-area">
+                        <div class="photo-box" onclick="triggerPhoto(event)" title="Toca para agregar foto">
+                            <img id="photo-img" src="" alt="Foto">
+                            <div class="photo-hint" id="photo-hint">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                                <span>Agregar<br>foto</span>
+                            </div>
+                        </div>
+                        <input type="file" id="photo-input" accept="image/*" onchange="loadPhoto(event)">
+                    </div>
+
+                    <div class="front-info">
+                        <div class="field">
+                            <span class="field-lbl">Titular</span>
+                            <span class="field-val name">Andrés Vargas Castillo</span>
+                        </div>
+                        <div class="field">
+                            <span class="field-lbl">Programas académicos</span>
+                            <div class="career-list">
+                                <div class="career-item">Bach. Mercadeo y Medios Digitales</div>
+                                <div class="career-item">Bach. Publicidad · Prod. Multimedia</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pie: ID + validez + chip -->
+                <div class="front-footer">
+                    <div class="id-block">
+                        <span class="field-lbl">ID Estudiantil</span>
+                        <span class="id-number">7-0294-0499</span>
+                        <div class="chip">
+                            <div></div><div></div><div></div>
+                            <div></div><div></div><div></div>
+                            <div></div><div></div><div></div>
+                        </div>
+                    </div>
+                    <div class="validity-block">
+                        <span class="field-lbl">Válido hasta</span>
+                        <div class="validity-date">ABRIL 2027</div>
+                        <div class="stamp">Universidad · Costa Rica</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- REVERSO -->
+        <div class="card-face card-back">
+            <div class="back-content">
+                <div class="back-mag"></div>
+
+                <div class="back-body">
+                    <!-- Izquierda: info de contacto ULACIT -->
+                    <div class="back-left">
+                        <div class="back-univ-name">
+                            Universidad<br>Latinoamericana de<br>Ciencia y Tecnología
+                        </div>
+
+                        <div class="back-contact">
+                            <div class="contact-row">
+                                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                <span><strong>+506 4003-1391</strong></span>
+                            </div>
+                            <div class="contact-row">
+                                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                                <span><strong>ulacit.ac.cr</strong></span>
+                            </div>
+                            <div class="contact-row">
+                                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                                <span>info@ulacit.ac.cr</span>
+                            </div>
+                            <div class="contact-row">
+                                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                <span>Barrio Tournón, San José</span>
+                            </div>
+                        </div>
+
+                        <div class="back-disclaimer">
+                            Este carné es <strong style="color:rgba(255,255,255,0.45)">intransferible</strong>.<br>
+                            Si lo encuentra, llame al +506 8594-7526.
+                        </div>
+                    </div>
+
+                    <!-- Derecha: código QR -->
+                    <div class="back-right">
+                        <div class="qr-box">
+                            <div id="qr-div"></div>
+                        </div>
+                        <div class="qr-label">Verificar ID</div>
+                    </div>
+                </div>
+
+                <div class="back-barcode">
+                    <div class="barcode-wrap">
+                        <div class="bars" id="barcode-bars"></div>
+                        <div class="barcode-text">7 · 0294 · 0499</div>
+                    </div>
+                </div>
+
+                <div class="back-colorbar"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<p class="tap-hint">↺ &nbsp; toca la tarjeta para voltear</p>
+
+<div class="actions">
+    <button class="btn btn-save" onclick="saveAsImage()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Guardar imagen
+    </button>
+    <button class="btn btn-info" onclick="toggleWallet()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="1" y="4" width="22" height="16" rx="2"/>
+            <line x1="1" y1="10" x2="23" y2="10"/>
+        </svg>
+        Apple Wallet
+    </button>
+</div>
+
+<div class="wallet-panel" id="walletPanel">
+    <div class="wallet-panel-title">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        Cómo tener el carné en iPhone
+    </div>
+    <ul class="wallet-steps">
+        <li class="highlight">
+            <span class="num">★</span>
+            Opción más fácil: Safari → este archivo → ícono compartir → <strong>"Añadir a pantalla de inicio"</strong> → queda como app en home screen
+        </li>
+        <li>
+            <span class="num">1.</span>
+            O toca "Guardar imagen" → descarga PNG al dispositivo
+        </li>
+        <li>
+            <span class="num">2.</span>
+            Fotos → foto del carné → corazón para destacar → acceso rápido
+        </li>
+        <li>
+            <span class="num">⚡</span>
+            Wallet nativo (.pkpass) requiere Apple Developer Program ($99/año) + servidor HTTPS + certificado firmado por Apple
+        </li>
+    </ul>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

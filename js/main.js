@@ -130,7 +130,7 @@ function toggleWallet() {
 }
 
 /* ════════════════════════════════════════════
-   GUARDAR COMO IMAGEN PNG
+   GUARDAR COMO IMAGEN PNG (Diseño Simplificado)
    Dibuja el carné directamente en canvas 2D
    (sin html2canvas) para evitar problemas de
    renderizado de fuentes y layout CSS.
@@ -270,13 +270,13 @@ async function saveAsImage() {
 
     /* ── Carreras ── */
     ctx.fillStyle = '#ffffff';
-    ctx.font = '400 28px -apple-system, BlinkMacSystemFont, Arial, sans-serif';
+    ctx.font = '400 24px -apple-system, BlinkMacSystemFont, Arial, sans-serif';
     ctx.fillText('▸  Bach. Mercadeo y Medios Digitales', 330, 346);
-    ctx.fillText('▸  Bach. Publicidad · Prod. Multimedia', 330, 392);
+    ctx.fillText('▸  Bach. Publicidad con énfasis en Producción Multimedia', 330, 392);
 
-    /* ── ID Estudiantil label ── */
+    /* ── ID Estudiantil label (Más discreto) ── */
     ctx.fillStyle = '#a78bfa';
-    ctx.font = '600 20px -apple-system, BlinkMacSystemFont, Arial, sans-serif';
+    ctx.font = '600 16px -apple-system, BlinkMacSystemFont, Arial, sans-serif';
     ctx.fillText('ID ESTUDIANTIL', 60, H - 155);
 
     /* ── Número ID ── */
@@ -284,31 +284,17 @@ async function saveAsImage() {
     ctx.font = 'bold 52px -apple-system, BlinkMacSystemFont, Arial, sans-serif';
     ctx.fillText('7-0294-0499', 60, H - 95);
 
-    /* ── Chip ── */
-    const chipX = 62, chipY = H - 80;
-    roundRect(chipX, chipY, 54, 42, 5);
-    ctx.fillStyle = '#c9a84c';
-    ctx.fill();
-    ctx.strokeStyle = '#a07830';
-    ctx.lineWidth = 1;
-    /* Grid del chip */
-    for (let ci = 0; ci < 3; ci++) {
-        for (let cj = 0; cj < 3; cj++) {
-            ctx.strokeRect(chipX + 4 + ci*17, chipY + 4 + cj*13, 13, 9);
-        }
-    }
-
-    /* ── Válido hasta ── */
+    /* ── Etiqueta de Válido desde - hasta ── */
     ctx.fillStyle = '#a78bfa';
-    ctx.font = '600 20px -apple-system, BlinkMacSystemFont, Arial, sans-serif';
+    ctx.font = '600 16px -apple-system, BlinkMacSystemFont, Arial, sans-serif';
     ctx.textAlign = 'right';
-    ctx.fillText('VÁLIDO HASTA', W - 60, H - 155);
+    ctx.fillText('VÁLIDO DESDE — HASTA:', W - 60, H - 155);
+
+    /* ── Período completo ── */
     ctx.fillStyle = '#f5c542';
-    ctx.font = 'bold 52px -apple-system, BlinkMacSystemFont, Arial, sans-serif';
-    ctx.fillText('ABRIL 2027', W - 60, H - 95);
-    ctx.fillStyle = 'rgba(255,255,255,0.35)';
-    ctx.font = '400 20px -apple-system, BlinkMacSystemFont, Arial, sans-serif';
-    ctx.fillText('UNIVERSIDAD · COSTA RICA', W - 60, H - 65);
+    ctx.textAlign = 'right';
+    ctx.font = 'bold 34px -apple-system, BlinkMacSystemFont, Arial, sans-serif';
+    ctx.fillText('MAYO 2022 — ABRIL 2027', W - 60, H - 95);
     ctx.textAlign = 'left';
 
     /* ── Descarga ── */

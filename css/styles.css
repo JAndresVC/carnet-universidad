@@ -58,8 +58,6 @@ body::before {
 
 /* ════════════════════════════════════════════
    CARD FLIP — Escena 3D
-   IMPORTANTE: NO poner filter en .card-inner ni .card-scene
-   filter crea nuevo stacking context → aplana preserve-3d → back se ve en espejo
 ════════════════════════════════════════════ */
 .card-scene {
     width: var(--card-w);
@@ -78,7 +76,6 @@ body::before {
     -webkit-transform-style: preserve-3d;
     transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
     -webkit-transition: -webkit-transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
-    /* filter: NO — rompería preserve-3d y mostraría espejo */
 }
 
 .card-scene.flipped .card-inner {
@@ -86,7 +83,6 @@ body::before {
     -webkit-transform: rotateY(180deg);
 }
 
-/* Cara base — compartida por frente y reverso */
 .card-face {
     position: absolute;
     inset: 0;
@@ -94,7 +90,6 @@ body::before {
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     will-change: transform;
-    /* overflow:hidden aquí rompe backface-visibility en Safari/Chrome */
 }
 
 /* ════════════════════════════════════════════
@@ -112,7 +107,6 @@ body::before {
     );
 }
 
-/* Brillo gloss sobre el frente */
 .card-front::before {
     content: '';
     position: absolute;
@@ -126,7 +120,6 @@ body::before {
     z-index: 20;
 }
 
-/* Patrón geométrico decorativo de fondo (motivo del logo ULACIT) */
 .front-geo {
     position: absolute;
     right: -30px;
@@ -138,7 +131,6 @@ body::before {
     z-index: 1;
 }
 
-/* Barra de 4 colores inferior — paleta del ícono del logo */
 .front-colorbar {
     position: absolute;
     bottom: 0;
@@ -158,7 +150,6 @@ body::before {
     z-index: 10;
 }
 
-/* Contenedor de contenido del frente */
 .front-content {
     position: relative;
     z-index: 5;
@@ -169,7 +160,6 @@ body::before {
     gap: 0;
 }
 
-/* ── Encabezado del frente ── */
 .front-header {
     display: flex;
     align-items: center;
@@ -191,32 +181,6 @@ body::before {
     display: block;
 }
 
-.logo-fallback {
-    display: none;
-    align-items: center;
-    gap: 6px;
-}
-
-.logo-fallback-icon {
-    width: 26px;
-    height: 26px;
-    border-radius: 4px;
-    background: var(--purple-mid);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    font-weight: 900;
-    color: white;
-}
-
-.logo-fallback-text {
-    font-size: 18px;
-    font-weight: 900;
-    color: white;
-    letter-spacing: 2px;
-}
-
 .badge-estudiante {
     font-size: 8px;
     font-weight: 700;
@@ -228,7 +192,6 @@ body::before {
     border-radius: 20px;
 }
 
-/* ── Cuerpo del frente: foto + info ── */
 .front-body {
     display: flex;
     gap: 14px;
@@ -236,7 +199,6 @@ body::before {
     min-height: 0;
 }
 
-/* Área de foto de perfil */
 .photo-area {
     flex-shrink: 0;
 }
@@ -287,7 +249,6 @@ body::before {
 
 #photo-input { display: none; }
 
-/* Campos de información del estudiante */
 .front-info {
     flex: 1;
     display: flex;
@@ -349,7 +310,6 @@ body::before {
     font-size: 8px;
 }
 
-/* ── Pie del frente: ID + validez ── */
 .front-footer {
     display: flex;
     justify-content: space-between;
@@ -373,48 +333,20 @@ body::before {
     font-variant-numeric: tabular-nums;
 }
 
-/* Chip EMV decorativo (estilo tarjeta de crédito) */
-.chip {
-    width: 26px;
-    height: 18px;
-    background: linear-gradient(135deg, #c8a84c 0%, #e8d080 35%, #c8a84c 60%, #f0e090 100%);
-    border-radius: 3px;
-    margin-top: 5px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 1px;
-    padding: 2px;
-}
-
-.chip div {
-    background: rgba(0,0,0,0.18);
-    border-radius: 1px;
-}
-
 .validity-block {
     text-align: right;
 }
 
 .validity-date {
-    font-size: 13px;
+    font-size: 10px; /* Tamaño ajustado para que entre el rango de fechas */
     font-weight: 800;
     color: #c8a84c;
     letter-spacing: 0.5px;
-}
-
-.stamp {
-    font-size: 6.5px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: rgba(255,255,255,0.3);
-    margin-top: 2px;
+    margin-bottom: 2px; /* Alineación perfecta con el ID */
 }
 
 /* ════════════════════════════════════════════
    REVERSO — Cara trasera de la tarjeta
-   Rotada 180deg como estado base para el flip
 ════════════════════════════════════════════ */
 .card-back {
     overflow: hidden;
@@ -426,7 +358,6 @@ body::before {
     isolation: isolate;
 }
 
-/* Marca de agua ULACIT en el reverso */
 .card-back::before {
     content: 'ULACIT';
     position: absolute;
@@ -450,7 +381,6 @@ body::before {
     flex-direction: column;
 }
 
-/* Banda magnética simulada */
 .back-mag {
     height: 40px;
     background: linear-gradient(180deg, #111 0%, #1a1a1a 100%);
@@ -468,7 +398,6 @@ body::before {
     background: rgba(255,255,255,0.06);
 }
 
-/* Cuerpo principal del reverso */
 .back-body {
     flex: 1;
     display: flex;
@@ -478,7 +407,6 @@ body::before {
     min-height: 0;
 }
 
-/* Columna izquierda: info de contacto */
 .back-left {
     flex: 1;
     display: flex;
@@ -533,7 +461,6 @@ body::before {
     padding-top: 4px;
 }
 
-/* Columna derecha: código QR */
 .back-right {
     flex-shrink: 0;
     display: flex;
@@ -562,7 +489,6 @@ body::before {
     text-transform: uppercase;
 }
 
-/* ── Código de barras ── */
 .back-barcode {
     padding: 0 14px 9px;
     flex-shrink: 0;
@@ -592,7 +518,6 @@ body::before {
     letter-spacing: 2.5px;
 }
 
-/* Barra de 4 colores inferior del reverso (invertida) */
 .back-colorbar {
     height: 5px;
     background: linear-gradient(90deg,
@@ -605,7 +530,7 @@ body::before {
 }
 
 /* ════════════════════════════════════════════
-   UI DEBAJO DE LA TARJETA — Hint y botones
+   UI DEBAJO DE LA TARJETA
 ════════════════════════════════════════════ */
 .tap-hint {
     font-size: 11px;
@@ -660,7 +585,6 @@ body::before {
     transform: translateY(-1px);
 }
 
-/* Panel informativo de Apple Wallet */
 .wallet-panel {
     display: none;
     width: var(--card-w);
@@ -712,9 +636,6 @@ body::before {
     color: rgba(200,168,76,0.8);
 }
 
-/* ════════════════════════════════════════════
-   RESPONSIVE — Móvil (< 440px)
-════════════════════════════════════════════ */
 @media (max-width: 440px) {
     :root {
         --card-w: calc(100vw - 32px);

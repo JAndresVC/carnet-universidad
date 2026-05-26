@@ -121,9 +121,11 @@ function loadPhoto(event) {
    CSS hace el resto: rotateY(180deg) con
    transition cubic-bezier para animación suave.
 ════════════════════════════════════════════ */
+/* FLIP DESACTIVADO TEMPORALMENTE
 function flipCard() {
     document.getElementById('cardScene').classList.toggle('flipped');
 }
+*/
 
 /* ════════════════════════════════════════════
    PANEL DE APPLE WALLET

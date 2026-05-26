@@ -52,7 +52,7 @@ carnet-ulacit/
 ### En iPhone (recomendado)
 1. Abrí la URL de GitHub Pages en **Safari**:
    ```
-   https://jandresvc.github.io/carnet-universidad/carnet-ulacit/
+   https://jandresvc.github.io/carnet-universidad/
    ```
 2. Tocá el ícono de compartir → **"Añadir a pantalla de inicio"**
 3. El carné queda como una app en tu home screen con ícono propio

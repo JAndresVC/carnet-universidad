@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Generador Libre · Carné Digital</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <script src="assets/js/qrcode.min.js"></script>
+    <script src="assets/js/html2canvas.min.js"></script>
+    <style>
+        /* ── Layout de página ── */
+        .free-page {
+            width: 100%;
+            padding: 28px 20px 52px;
+        }
+
+        .free-layout {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* ── Columnas datos y diseño ── */
+        .free-col-datos,
+        .free-col-diseno {
+            width: 260px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* ── Columna preview ── */
+        .free-col-preview {
+            flex: 1;
+            min-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding-top: 4px;
+        }
+
+        /* ── Card base ── */
+        .free-form-card {
+            background: #1a0d30;
+            border: 1px solid rgba(124, 93, 200, 0.22);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .free-form-title {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.38);
+        }
+
+        /* ── Campos de formulario ── */
+        .free-field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .free-label {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.3px;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .free-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 12px;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+            padding: 7px 9px;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .free-input::placeholder { color: rgba(255, 255, 255, 0.2); }
+
+        .free-input:focus {
+            border-color: rgba(124, 93, 200, 0.55);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .free-row { display: flex; gap: 8px; }
+        .free-row .free-field { flex: 1; }
+
+        /* ── Botón upload ── */
+        .free-upload-btn {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 11px;
+            font-family: inherit;
+            padding: 7px 9px;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .free-upload-btn:hover {
+            border-color: rgba(124, 93, 200, 0.45);
+            background: rgba(255, 255, 255, 0.09);
+        }
+
+        .free-upload-btn span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* ── Separador de sección ── */
+        .free-section-sep {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.07);
+            margin: 0;
+        }
+
+        .free-section-label {
+            font-size: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
+            color: rgba(255, 255, 255, 0.22);
+        }
+
+        /* ── Color pickers ── */
+        .free-color-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .free-color-label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.5);
+            flex: 1;
+        }
+
+        input[type="color"].free-color-input {
+            width: 34px;
+            height: 22px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 1px;
+            background: none;
+            flex-shrink: 0;
+        }
+
+        /* ── Botones de fuente ── */
+        .free-font-btns {
+            display: flex;
+            gap: 6px;
+        }
+
+        .free-font-btn {
+            flex: 1;
+            padding: 6px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: rgba(255, 255, 255, 0.45);
+            font-size: 11px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.15s;
+            text-align: center;
+        }
+
+        .free-font-btn[data-font="serif"] { font-family: Georgia, serif; }
+        .free-font-btn[data-font="mono"]  { font-family: 'Courier New', monospace; font-size: 10px; }
+
+        .free-font-btn.active,
+        .free-font-btn:hover {
+            background: rgba(167, 139, 250, 0.15);
+            border-color: rgba(167, 139, 250, 0.4);
+            color: #a78bfa;
+        }
+
+        /* ── Opciones de barra ── */
+        .free-barra-opts {
+            display: flex;
+            gap: 5px;
+        }
+
+        .free-barra-opt {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding: 7px 3px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: border-color 0.15s, background 0.15s;
+        }
+
+        .free-barra-opt:hover { background: rgba(255, 255, 255, 0.07); }
+
+        .free-barra-opt.active {
+            border-color: #a78bfa;
+            background: rgba(167, 139, 250, 0.1);
+        }
+
+        .barra-preview {
+            width: 100%;
+            height: 5px;
+            border-radius: 2px;
+        }
+
+        .free-barra-opt span {
+            font-size: 7.5px;
+            color: rgba(255, 255, 255, 0.35);
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .free-barra-opt.active span { color: #a78bfa; }
+
+        /* ── Opciones de forma ── */
+        .free-shape-opts {
+            display: flex;
+            gap: 8px;
+        }
+
+        .free-shape-opt {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 9px 4px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: border-color 0.15s, background 0.15s;
+        }
+
+        .free-shape-opt:hover { background: rgba(255, 255, 255, 0.07); }
+
+        .free-shape-opt.active {
+            border-color: #a78bfa;
+            background: rgba(167, 139, 250, 0.1);
+        }
+
+        .shape-preview {
+            width: 38px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.13);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .free-shape-opt span {
+            font-size: 7.5px;
+            color: rgba(255, 255, 255, 0.35);
+            text-align: center;
+        }
+
+        .free-shape-opt.active span { color: #a78bfa; }
+
+        /* ── Checkboxes ── */
+        .free-check-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .free-check-row input[type="checkbox"] {
+            accent-color: #a78bfa;
+            width: 13px;
+            height: 13px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .free-check-row label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.52);
+            cursor: pointer;
+        }
+
+        #free-qr-url-row {
+            display: none;
+            padding-left: 21px;
+        }
+
+        /* ── Botones de acción preview ── */
+        .free-btn-save {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 11px 20px;
+            border-radius: 50px;
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #F0EBF8;
+            color: #2C1B45;
+            box-sizing: border-box;
+        }
+
+        .free-btn-save:hover {
+            background: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(200, 168, 76, 0.3);
+        }
+
+        .free-preview-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.22);
+            text-align: center;
+            letter-spacing: 0.3px;
+        }
+
+        /* ── Botón reset footer ── */
+        .free-footer-row {
+            display: flex;
+            justify-content: center;
+            margin-top: 28px;
+        }
+
+        .free-btn-reset {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 11px;
+            font-family: inherit;
+            padding: 7px 18px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .free-btn-reset:hover {
+            background: rgba(255, 59, 59, 0.08);
+            border-color: rgba(255, 59, 59, 0.3);
+            color: rgba(255, 120, 120, 0.75);
+        }
+
+        /* ── Card libre — estilos escopados ── */
+        #free-cardScene {
+            --free-color1: #2C1B45;
+            --free-color2: #3a2260;
+            --free-accent: #a78bfa;
+            --free-fecha: #c8a84c;
+            cursor: default;
+        }
+
+        #free-cardScene .card-front {
+            background: linear-gradient(145deg,
+                var(--free-color1) 0%,
+                var(--free-color2) 40%,
+                var(--free-color1) 100%
+            ) !important;
+        }
+
+        #free-cardScene .field-lbl {
+            color: var(--free-accent) !important;
+        }
+
+        #free-cardScene .validity-date {
+            color: var(--free-fecha) !important;
+        }
+
+        #free-cardScene .career-item::before {
+            color: var(--free-accent) !important;
+        }
+
+        .photo-box img#free-photo-img {
+            display: none;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ── Texto institución en logo area ── */
+        .free-inst-text {
+            font-size: 15px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 155px;
+            line-height: 1;
+            display: block;
+        }
+
+        .free-inst-text.free-placeholder {
+            font-size: 11px !important;
+            font-weight: 400 !important;
+            color: rgba(255, 255, 255, 0.2) !important;
+            font-style: italic;
+        }
+
+        /* ── QR pequeño en footer ── */
+        #free-qr-small {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 4px;
+            padding: 2px;
+            flex-shrink: 0;
+        }
+
+        /* ── Placeholders del carné libre ── */
+        .free-placeholder {
+            color: rgba(255, 255, 255, 0.25) !important;
+            font-style: italic;
+            font-weight: 400 !important;
+        }
+
+        .validity-date.free-placeholder {
+            color: rgba(255, 255, 255, 0.22) !important;
+            font-weight: 400 !important;
+        }
+
+        .career-item.free-placeholder {
+            color: rgba(255, 255, 255, 0.22) !important;
+        }
+
+        /* ── Modo claro ── */
+        #free-cardScene.modo-claro .card-front {
+            background: #f0ebf8 !important;
+        }
+
+        #free-cardScene.modo-claro .card-front::before {
+            background: linear-gradient(165deg, rgba(0,0,0,0.03) 0%, transparent 45%) !important;
+        }
+
+        #free-cardScene.modo-claro .field-val,
+        #free-cardScene.modo-claro .id-number {
+            color: #1a0d30 !important;
+        }
+
+        #free-cardScene.modo-claro .career-item {
+            color: rgba(44, 27, 69, 0.75) !important;
+        }
+
+        #free-cardScene.modo-claro .front-footer {
+            border-top-color: rgba(44, 27, 69, 0.12) !important;
+        }
+
+        #free-cardScene.modo-claro .badge-estudiante {
+            background: #2C1B45 !important;
+            color: #f0ebf8 !important;
+        }
+
+        #free-cardScene.modo-claro .photo-box {
+            background: rgba(44, 27, 69, 0.07);
+            border-color: rgba(44, 27, 69, 0.2);
+        }
+
+        #free-cardScene.modo-claro .photo-hint svg {
+            opacity: 0.5;
+            stroke: rgba(44, 27, 69, 0.7);
+        }
+
+        #free-cardScene.modo-claro .photo-hint span {
+            color: rgba(44, 27, 69, 0.35);
+        }
+
+        #free-cardScene.modo-claro .front-geo {
+            opacity: 0.03;
+        }
+
+        #free-cardScene.modo-claro .free-inst-text {
+            color: #1a0d30 !important;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .free-layout {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .free-col-datos,
+            .free-col-diseno {
+                width: 100%;
+            }
+
+            .free-col-preview {
+                min-width: 0;
+                width: 100%;
+                order: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="ulacit-nav">
+    <div class="nav-brand">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <rect x="0" y="0" width="13" height="13" rx="2" fill="#564394"/>
+            <rect x="15" y="0" width="13" height="13" rx="2" fill="#0689A7"/>
+            <rect x="0" y="15" width="13" height="13" rx="2" fill="#95C11F"/>
+            <rect x="15" y="15" width="13" height="13" rx="2" fill="#E9531E"/>
+        </svg>
+        <span class="nav-brand-name">ULACIT</span>
+        <span class="nav-brand-sub">carnés digitales</span>
+    </div>
+    <ul class="nav-links">
+        <li><a href="admin.html" class="nav-link">Mi carné</a></li>
+        <li><a href="generador-ulacit.html" class="nav-link">Generador ULACIT</a></li>
+        <li><a href="generador-libre.html" class="nav-link active">Generador libre</a></li>
+    </ul>
+</nav>
+
+<div class="free-page">
+    <div class="free-layout">
+
+        <!-- ════════════════ COLUMNA 1 — DATOS ════════════════ -->
+        <div class="free-col-datos">
+
+            <div class="free-form-card">
+                <div class="free-form-title">Datos del carné</div>
+
+                <div class="free-field">
+                    <label class="free-label" for="free-nombre">Nombre completo</label>
+                    <input type="text" id="free-nombre" class="free-input" placeholder="Ej: María González" autocomplete="off">
+                </div>
+
+                <div class="free-field">
+                    <label class="free-label" for="free-id">ID / Carnet</label>
+                    <input type="text" id="free-id" class="free-input" placeholder="Ej: 1-1234-5678" autocomplete="off">
+                </div>
+
+                <div class="free-field">
+                    <label class="free-label" for="free-institucion">Nombre de la institución</label>
+                    <input type="text" id="free-institucion" class="free-input" placeholder="Ej: Universidad Nacional" autocomplete="off">
+                </div>
+
+                <div class="free-field">
+                    <label class="free-label" for="free-carrera1">Carrera o programa 1</label>
+                    <input type="text" id="free-carrera1" class="free-input" placeholder="Ej: Bach. Ingeniería en Sistemas" autocomplete="off">
+                </div>
+
+                <div class="free-field">
+                    <label class="free-label" for="free-carrera2">Carrera o programa 2 <span style="opacity:.5;font-size:7px;text-transform:none;letter-spacing:0">(opcional)</span></label>
+                    <input type="text" id="free-carrera2" class="free-input" placeholder="Segunda carrera (dejar vacío si no aplica)" autocomplete="off">
+                </div>
+
+                <div class="free-row">
+                    <div class="free-field">
+                        <label class="free-label" for="free-desde">Válido desde</label>
+                        <input type="text" id="free-desde" class="free-input" placeholder="Enero 2023" autocomplete="off">
+                    </div>
+                    <div class="free-field">
+                        <label class="free-label" for="free-hasta">Válido hasta</label>
+                        <input type="text" id="free-hasta" class="free-input" placeholder="Dic 2027" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+
+            <div class="free-form-card">
+                <div class="free-form-title">Foto y logo</div>
+
+                <div class="free-field">
+                    <label class="free-label">Foto del estudiante</label>
+                    <label class="free-upload-btn" for="free-photo-input">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                        <span id="free-photo-filename">Elegir foto…</span>
+                    </label>
+                    <input type="file" id="free-photo-input" accept="image/*" style="display:none" onchange="loadFreePhoto(event)">
+                </div>
+
+                <div class="free-field">
+                    <label class="free-label">Logo de la institución <span style="opacity:.5;font-size:7px;text-transform:none;letter-spacing:0">(PNG transparente)</span></label>
+                    <label class="free-upload-btn" for="free-logo-input">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                        <span id="free-logo-filename">Elegir logo…</span>
+                    </label>
+                    <input type="file" id="free-logo-input" accept="image/*" style="display:none" onchange="loadFreeLogo(event)">
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ════════════════ COLUMNA 2 — DISEÑO ════════════════ -->
+        <div class="free-col-diseno">
+
+            <div class="free-form-card">
+                <div class="free-form-title">Diseño</div>
+
+                <!-- COLORES -->
+                <div class="free-section-label">Colores</div>
+
+                <div class="free-color-row">
+                    <span class="free-color-label">Fondo principal</span>
+                    <input type="color" id="free-color1" class="free-color-input" value="#2C1B45"
+                           oninput="setColor('colorFondo1', this.value)">
+                </div>
+                <div class="free-color-row">
+                    <span class="free-color-label">Fondo secundario</span>
+                    <input type="color" id="free-color2" class="free-color-input" value="#3a2260"
+                           oninput="setColor('colorFondo2', this.value)">
+                </div>
+                <div class="free-color-row">
+                    <span class="free-color-label">Acento / labels</span>
+                    <input type="color" id="free-color-accent" class="free-color-input" value="#a78bfa"
+                           oninput="setColor('colorAccento', this.value)">
+                </div>
+                <div class="free-color-row">
+                    <span class="free-color-label">Fecha / validez</span>
+                    <input type="color" id="free-color-fecha" class="free-color-input" value="#c8a84c"
+                           oninput="setColor('colorFecha', this.value)">
+                </div>
+
+                <div class="free-section-sep"></div>
+
+                <!-- FUENTE -->
+                <div class="free-section-label">Fuente</div>
+                <div class="free-font-btns">
+                    <button class="free-font-btn active" data-font="sans" onclick="setFont('sans', this)">Sans</button>
+                    <button class="free-font-btn" data-font="serif" onclick="setFont('serif', this)">Serif</button>
+                    <button class="free-font-btn" data-font="mono" onclick="setFont('mono', this)">Mono</button>
+                </div>
+
+                <div class="free-section-sep"></div>
+
+                <!-- BARRA DE COLORES -->
+                <div class="free-section-label">Barra inferior</div>
+                <div class="free-barra-opts">
+                    <div class="free-barra-opt active" data-barra="ulacit" onclick="setBarra('ulacit', this)">
+                        <div class="barra-preview" style="background:linear-gradient(90deg,#5B55D6 0%,#5B55D6 25%,#2EBD6E 25%,#2EBD6E 50%,#7CC840 50%,#7CC840 75%,#F07840 75%,#F07840 100%)"></div>
+                        <span>ULACIT</span>
+                    </div>
+                    <div class="free-barra-opt" data-barra="solid" onclick="setBarra('solid', this)">
+                        <div class="barra-preview" id="barra-solid-preview" style="background:#a78bfa"></div>
+                        <span>Sólido</span>
+                    </div>
+                    <div class="free-barra-opt" data-barra="gradient" onclick="setBarra('gradient', this)">
+                        <div class="barra-preview" id="barra-gradient-preview" style="background:linear-gradient(90deg,#2C1B45,#a78bfa)"></div>
+                        <span>Degra&shy;dado</span>
+                    </div>
+                    <div class="free-barra-opt" data-barra="rainbow" onclick="setBarra('rainbow', this)">
+                        <div class="barra-preview" style="background:linear-gradient(90deg,#ff6b6b,#ffd93d,#6bcb77,#4d96ff,#c77dff)"></div>
+                        <span>Arco&shy;íris</span>
+                    </div>
+                    <div class="free-barra-opt" data-barra="none" onclick="setBarra('none', this)">
+                        <div class="barra-preview" style="background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18)"></div>
+                        <span>Sin barra</span>
+                    </div>
+                </div>
+
+                <div class="free-section-sep"></div>
+
+                <!-- FORMA -->
+                <div class="free-section-label">Forma</div>
+                <div class="free-shape-opts">
+                    <div class="free-shape-opt active" data-radius="18px" onclick="setShape('18px', this)">
+                        <div class="shape-preview" style="border-radius:18px"></div>
+                        <span>Normal</span>
+                    </div>
+                    <div class="free-shape-opt" data-radius="28px" onclick="setShape('28px', this)">
+                        <div class="shape-preview" style="border-radius:28px"></div>
+                        <span>Muy redon&shy;deada</span>
+                    </div>
+                    <div class="free-shape-opt" data-radius="6px" onclick="setShape('6px', this)">
+                        <div class="shape-preview" style="border-radius:6px"></div>
+                        <span>Cuadrada</span>
+                    </div>
+                </div>
+
+                <div class="free-section-sep"></div>
+
+                <!-- EXTRAS -->
+                <div class="free-section-label">Extras</div>
+
+                <div class="free-check-row">
+                    <input type="checkbox" id="free-check-geo" checked onchange="toggleGeo(this.checked)">
+                    <label for="free-check-geo">Mostrar patrón geométrico</label>
+                </div>
+
+                <div class="free-check-row">
+                    <input type="checkbox" id="free-check-barra" checked onchange="toggleBarra(this.checked)">
+                    <label for="free-check-barra">Mostrar barra de colores</label>
+                </div>
+
+                <div class="free-check-row">
+                    <input type="checkbox" id="free-check-qr" onchange="toggleQR(this.checked)">
+                    <label for="free-check-qr">Incluir QR de verificación</label>
+                </div>
+
+                <div id="free-qr-url-row">
+                    <input type="url" id="free-qr-url" class="free-input"
+                           placeholder="https://..." autocomplete="off"
+                           oninput="setQRUrl(this.value)">
+                </div>
+
+                <div class="free-check-row">
+                    <input type="checkbox" id="free-check-claro" onchange="toggleClaro(this.checked)">
+                    <label for="free-check-claro">Modo claro / fondo blanco</label>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ════════════════ COLUMNA 3 — PREVIEW ════════════════ -->
+        <div class="free-col-preview">
+
+            <div class="card-scene" id="free-cardScene">
+                <div class="card-inner">
+                    <div class="card-face card-front" id="free-card-front">
+
+                        <svg id="free-geo" class="front-geo" viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="0"   y="0"   width="120" height="120" rx="8" stroke="white" stroke-width="2" fill="none"/>
+                            <rect x="140" y="0"   width="120" height="120" rx="8" stroke="white" stroke-width="2" fill="none"/>
+                            <rect x="0"   y="140" width="120" height="120" rx="8" stroke="white" stroke-width="2" fill="none"/>
+                            <rect x="140" y="140" width="120" height="120" rx="8" stroke="white" stroke-width="2" fill="none"/>
+                            <path d="M30 60 L60 30 L90 60" stroke="white" stroke-width="2" fill="none"/>
+                            <rect x="40" y="70" width="40" height="30" rx="3" stroke="white" stroke-width="1.5" fill="none"/>
+                            <circle cx="200" cy="60" r="24" stroke="white" stroke-width="1.5" fill="none"/>
+                            <line x1="200" y1="36" x2="200" y2="84" stroke="white" stroke-width="1.5"/>
+                            <line x1="176" y1="60" x2="224" y2="60" stroke="white" stroke-width="1.5"/>
+                            <line x1="20"  y1="200" x2="100" y2="200" stroke="white" stroke-width="1.5"/>
+                            <line x1="20"  y1="220" x2="100" y2="220" stroke="white" stroke-width="1.5"/>
+                            <line x1="40"  y1="155" x2="40"  y2="255" stroke="white" stroke-width="1.5"/>
+                            <line x1="80"  y1="155" x2="80"  y2="255" stroke="white" stroke-width="1.5"/>
+                            <rect x="155" y="155" width="50" height="50" rx="4" stroke="white" stroke-width="1.5" fill="none"/>
+                            <rect x="170" y="170" width="20" height="20" rx="2" stroke="white" stroke-width="1.5" fill="none"/>
+                        </svg>
+
+                        <div class="front-colorbar"></div>
+
+                        <div class="front-content">
+                            <div class="front-header">
+                                <div class="logo-container" style="max-width:160px; overflow:hidden;">
+                                    <img id="free-logo-img" src="" alt="Logo" style="display:none; max-height:26px; max-width:150px; object-fit:contain;">
+                                    <span id="free-inst-text" class="free-inst-text free-placeholder">Nombre de institución</span>
+                                </div>
+                                <div class="badge-estudiante" id="free-badge">Institución</div>
+                            </div>
+
+                            <div class="front-body">
+                                <div class="photo-area">
+                                    <div class="photo-box" onclick="triggerFreePhoto(event)" title="Toca para agregar foto">
+                                        <img id="free-photo-img" src="" alt="Foto">
+                                        <div class="photo-hint" id="free-photo-hint">
+                                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                                <circle cx="12" cy="7" r="4"/>
+                                            </svg>
+                                            <span>Agregar<br>foto</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="front-info">
+                                    <div class="field">
+                                        <span class="field-lbl">Titular</span>
+                                        <span class="field-val name free-placeholder" id="free-name-display">Nombre completo</span>
+                                    </div>
+                                    <div class="field">
+                                        <span class="field-lbl">Programa</span>
+                                        <div class="career-list">
+                                            <div class="career-item free-placeholder" id="free-carrera1-display">Carrera o programa</div>
+                                            <div class="career-item" id="free-carrera2-display" style="display:none"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="front-footer">
+                                <div class="id-block">
+                                    <span class="field-lbl" style="font-size:6.5px;">ID</span>
+                                    <span class="id-number free-placeholder" id="free-id-display">0-0000-0000</span>
+                                </div>
+
+                                <div id="free-qr-small">
+                                    <div id="free-qr-div"></div>
+                                </div>
+
+                                <div class="validity-block" style="text-align:right; display:flex; flex-direction:column; gap:1px;">
+                                    <span class="field-lbl" style="font-size:6.5px;">Válido desde — hasta:</span>
+                                    <div class="validity-date free-placeholder" id="free-validity-display">DESDE — HASTA</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <p class="free-preview-label">Vista previa — se actualiza en tiempo real</p>
+
+            <button class="free-btn-save" onclick="saveFreeImage()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Descargar PNG
+            </button>
+
+        </div><!-- /.free-col-preview -->
+
+    </div><!-- /.free-layout -->
+
+    <div class="free-footer-row">
+        <button class="free-btn-reset" onclick="resetAll()">Resetear todo</button>
+    </div>
+
+</div><!-- /.free-page -->
+
+<script src="js/generador-libre.js"></script>
+</body>
+</html>

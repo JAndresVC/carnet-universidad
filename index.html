@@ -1,253 +1,154 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- Configuración general de la página y recursos externos -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Carné ULACIT">
-    <title>Carné Digital · ULACIT</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="assets/js/qrcode.min.js"></script>
-    <script src="assets/js/html2canvas.min.js"></script>
+    <title>Acceso · ULACIT</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(ellipse at 30% 20%, #1a0d30 0%, #0d0718 50%, #060410 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.15) 0%, transparent 100%),
+                radial-gradient(1px 1px at 70% 15%, rgba(255,255,255,0.1) 0%, transparent 100%),
+                radial-gradient(1.5px 1.5px at 85% 60%, rgba(255,255,255,0.12) 0%, transparent 100%),
+                radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.08) 0%, transparent 100%),
+                radial-gradient(1px 1px at 55% 45%, rgba(255,255,255,0.1) 0%, transparent 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .login-card {
+            position: relative;
+            z-index: 1;
+            width: 320px;
+            background: rgba(26, 13, 48, 0.9);
+            border: 1px solid rgba(124, 93, 200, 0.3);
+            border-radius: 16px;
+            padding: 36px 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        .login-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .login-brand-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 1.5px;
+        }
+
+        .login-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 4px;
+            text-align: center;
+        }
+
+        .login-subtitle {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 28px;
+            text-align: center;
+        }
+
+        .login-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 14px;
+            font-family: inherit;
+            padding: 12px 14px;
+            outline: none;
+            transition: border-color 0.2s, background 0.2s;
+            margin-bottom: 12px;
+        }
+
+        .login-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .login-input:focus {
+            border-color: rgba(124, 93, 200, 0.6);
+            background: rgba(255, 255, 255, 0.09);
+        }
+
+        .login-btn {
+            width: 100%;
+            background: #5B3A9E;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: inherit;
+            padding: 13px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+            margin-top: 4px;
+        }
+
+        .login-btn:hover {
+            background: #6d49b8;
+            transform: translateY(-1px);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-error {
+            font-size: 12px;
+            color: #f87171;
+            text-align: center;
+            margin-top: 12px;
+            min-height: 18px;
+        }
+    </style>
 </head>
 <body>
-
-<!-- Contenedor principal: permite voltear el carné al tocarlo -->
-
-<div class="card-scene" id="cardScene">
-    <div class="card-inner" id="cardInner">
-
-        <!-- Frente del carné: logo, foto, datos personales y vigencia -->
-        <div class="card-face card-front">
-            <!-- Gráficos decorativos del fondo frontal -->
-            <svg class="front-geo" viewBox="0 0 260 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="0"   y="0"   width="120" height="120" rx="8" stroke="white" stroke-width="2" fill="none"/>
-                <rect x="140" y="0"   width="120" height="120" rx="8" stroke="white" stroke-width="2" fill="none"/>
-                <rect x="0"   y="140" width="120" height="120" rx="8" stroke="white" stroke-width="2" fill="none"/>
-                <rect x="140" y="140" width="120" height="120" rx="8" stroke="white" stroke-width="2" fill="none"/>
-                <path d="M30 60 L60 30 L90 60" stroke="white" stroke-width="2" fill="none"/>
-                <rect x="40" y="70" width="40" height="30" rx="3" stroke="white" stroke-width="1.5" fill="none"/>
-                <circle cx="200" cy="60" r="24" stroke="white" stroke-width="1.5" fill="none"/>
-                <line x1="200" y1="36" x2="200" y2="84" stroke="white" stroke-width="1.5"/>
-                <line x1="176" y1="60" x2="224" y2="60" stroke="white" stroke-width="1.5"/>
-                <line x1="20"  y1="200" x2="100" y2="200" stroke="white" stroke-width="1.5"/>
-                <line x1="20"  y1="220" x2="100" y2="220" stroke="white" stroke-width="1.5"/>
-                <line x1="40"  y1="155" x2="40"  y2="255" stroke="white" stroke-width="1.5"/>
-                <line x1="80"  y1="155" x2="80"  y2="255" stroke="white" stroke-width="1.5"/>
-                <rect x="155" y="155" width="50" height="50" rx="4" stroke="white" stroke-width="1.5" fill="none"/>
-                <rect x="170" y="170" width="20" height="20" rx="2" stroke="white" stroke-width="1.5" fill="none"/>
+    <div class="login-card">
+        <div class="login-brand">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                <rect x="0" y="0" width="15" height="15" rx="2.5" fill="#564394"/>
+                <rect x="17" y="0" width="15" height="15" rx="2.5" fill="#0689A7"/>
+                <rect x="0" y="17" width="15" height="15" rx="2.5" fill="#95C11F"/>
+                <rect x="17" y="17" width="15" height="15" rx="2.5" fill="#E9531E"/>
             </svg>
-
-            <div class="front-colorbar"></div>
-
-            <div class="front-content">
-                <div class="front-header">
-                    <div class="logo-container">
-                        <svg width="130" height="31" viewBox="0 0 255 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip-logo-carne)">
-                                <path d="M31.4691 31.532V38.2621V49.6352V59.4333H59.2697V52.6798V41.3067V31.532H31.4691ZM46.5046 41.3106H42.7467V48.4237H32.6802V39.4776H46.5046V41.3106ZM43.9539 49.6352H47.7118V42.5221H58.0548V51.4682H43.95V49.6352H43.9539ZM46.5046 48.4237H43.9539V42.5261H46.5046V48.4237ZM58.0587 52.6798V58.2178H32.6763V49.6352H42.7428V52.6798H58.0548M47.7118 41.3106V38.266H32.6763V32.7475H58.0587V41.3106H47.7157H47.7118Z" fill="#E9531E"/>
-                            <path d="M22.4231 0H15.0125H0.00421143V0.578426V1.66884V16.2194V16.5594V27.9013H27.801V0H22.4231ZM16.2236 5.86634V1.21548H21.2159V2.67327H18.9962V5.82725L21.7962 8.41845L17.6683 11.5881L13.0848 8.73111L16.2236 5.86634ZM1.21531 1.21548H15.0125V5.33481L12.0178 8.07061L1.21531 1.33273V1.21548ZM1.21531 26.6858V17.3059L16.3599 26.6858H1.21531ZM26.5938 26.6858H18.8833L26.5938 20.9523V26.6858ZM26.5938 10.0208L22.7424 13.038V14.5779L26.5938 11.5607V14.6209L20.8693 18.9865V20.5107L26.5938 16.1451V19.4437L17.6722 26.0761L1.21531 15.8794V12.143L14.2531 20.4091V18.9747L1.21531 10.7087V7.91037L11.5349 14.5036V13.0654L1.21531 6.47212V2.75925L17.7384 13.0615L26.5938 6.25716V10.0208ZM26.5938 4.72903L22.7697 7.66806L20.2034 5.29182V3.88484H22.427V1.21157H26.5977V4.72512L26.5938 4.72903Z" fill="#a78bfa"/>
-                            <path d="M0 59.445H27.8318V31.5164H0V59.445ZM26.5662 43.21H19.9617V32.7866H26.5662V43.21ZM11.301 50.6279H1.26561V48.1892H11.301V50.6279ZM1.26561 44.4841H11.301V46.919H1.26561V44.4841ZM16.2661 44.4841H18.6961V46.919H16.2661V44.4841ZM18.6922 50.6279H16.2622V48.1892H18.6922V50.6279ZM12.5705 44.4841H15.0005V46.919H12.5705V44.4841ZM15.0005 50.6279H12.5705V48.1892H15.0005V50.6279ZM12.5705 32.7866H15.0005V43.21H12.5705V32.7866ZM15.0005 58.1748H12.5705V51.902H15.0005V58.1748ZM16.2661 51.8981H18.6961V58.1709H16.2661V51.8981ZM16.2661 32.7866H18.6961V43.21H16.2661V32.7866ZM19.9617 48.1892H26.5662V50.6279H19.9617V48.1892ZM19.9617 44.4841H26.5662V46.919H19.9617V44.4841ZM11.301 43.21H1.26561V32.7866H11.301V43.21ZM1.26561 51.8981H11.301V58.1709H1.26561V51.8981ZM19.9617 51.8981H26.5662V58.1709H19.9617V51.8981Z" fill="#95C11F"/>
-                            <path d="M31.4691 27.9013H59.2697V0H31.4691V27.9013ZM32.6802 1.21548H38.6344V10.0677L32.6802 6.47212V1.21548ZM41.0955 26.6858H32.6802V13.1475L41.0955 18.451V26.6858ZM58.0625 9.72772V26.6897H46.1736V18.4315M58.0625 4.3421L46.4773 12.9012V14.4059L58.0625 5.8468V8.22303L44.9664 17.8061V26.6858H42.3066V17.7788L32.684 11.7131V7.88692L38.6616 11.4943H38.724L39.8494 10.6462V1.21548H41.1033V9.70427L42.3105 8.78973V1.21548H43.5489V7.85175L44.76 6.93721V1.21548H57.2058L48.5373 7.58598V9.09067L58.0703 2.08312V4.3421H58.0625Z" fill="#0689A7"/>
-                            <path d="M70.337 1.06305C70.337 0.504169 70.8394 0 71.3963 0H75.1308C75.7422 0 76.19 0.504169 76.19 1.06305V24.1532C76.19 29.746 79.7532 34.1076 85.4387 34.1076C91.1243 34.1076 94.7965 29.8007 94.7965 24.2665V1.06305C94.7965 0.504169 95.2443 0 95.8557 0H99.5903C100.147 0 100.646 0.504169 100.646 1.06305V24.544C100.646 33.0446 94.2396 39.6965 85.4387 39.6965C76.6924 39.6965 70.3409 33.0446 70.3409 24.544V1.06305H70.337Z" fill="white"/>
-                            <path d="M136.741 37.6993L153.603 0.605784C153.766 0.277488 154.261 0 154.534 0H155.083C155.355 0 155.85 0.277488 156.017 0.605784L172.766 37.6993C173.097 38.4145 172.657 39.1298 171.832 39.1298H168.374C167.715 39.1298 167.33 38.8015 167.112 38.3012L163.708 30.7543H145.752C144.654 33.2908 143.501 35.7686 142.403 38.3012C142.24 38.6881 141.799 39.1298 141.137 39.1298H137.679C136.854 39.1298 136.414 38.4145 136.745 37.6993M161.617 26.0175L154.861 10.9158H154.588L147.886 26.0175H161.617Z" fill="white"/>
-                            <path d="M192.884 0.109432C198.511 0.109432 202.576 2.01277 206.361 5.30745C206.864 5.7569 206.864 6.42522 206.416 6.87467L203.967 9.39161C203.577 9.89578 203.075 9.89578 202.572 9.39161C199.955 7.09745 196.388 5.64356 192.934 5.64356C184.967 5.64356 178.95 12.3541 178.95 20.1824C178.95 28.0107 185.025 34.6626 192.993 34.6626C197.062 34.6626 199.901 33.0406 202.572 30.9732C203.075 30.5823 203.577 30.6371 203.908 30.9184L206.47 33.4354C206.918 33.8262 206.805 34.5532 206.416 34.944C202.631 38.6334 197.837 40.3687 192.88 40.3687C181.738 40.3687 172.766 31.4773 172.766 20.2957C172.766 9.11412 181.738 0.113341 192.88 0.113341" fill="white"/>
-                            <path d="M213.141 1.17249C213.141 0.613601 213.644 0.109432 214.2 0.109432H217.88C218.433 0.109432 218.936 0.613601 218.936 1.17249V38.1839C218.936 38.7428 218.433 39.247 217.88 39.247H214.2C213.64 39.247 213.141 38.7428 213.141 38.1839V1.17249Z" fill="white"/>
-                            <path d="M253.941 0.109432H252.153H242.924H237.449H232.947H228.196H226.428C225.813 0.109432 225.369 0.617509 225.369 1.18421V4.29521C225.369 4.858 225.813 5.36998 226.428 5.36998H228.196H233.679H237.277V38.1879C237.277 38.7467 237.776 39.2509 238.337 39.2509H242.013C242.57 39.2509 243.072 38.7467 243.072 38.1879V5.37389H253.941C254.556 5.37389 255 4.86191 255 4.29911V1.18421C255 0.617509 254.556 0.109432 253.941 0.109432Z" fill="white"/>
-                            <path d="M130.95 33.9278H119.934V33.9356H119.49H118.306L112.464 33.9396V1.06305C112.464 0.504169 111.962 0 111.405 0H107.729C107.114 0 106.67 0.500261 106.67 1.06305V38.0745C106.67 38.6295 107.118 39.1337 107.729 39.1337H127.562C127.582 39.1337 127.601 39.1298 127.621 39.1298H129.19H129.326C129.346 39.1298 129.365 39.1258 129.381 39.1219H130.95C131.566 39.1219 132.009 38.6178 132.009 38.0589V34.9831C132.009 34.4242 131.562 33.92 130.95 33.92" fill="white"/>
-                            <path d="M96.2374 48.0172H97.9002L99.271 55.5485H99.3021L100.428 48.0172H102.32L100.248 59.8359H98.5505L97.0824 52.0271H97.0513L95.6805 59.8359H93.9826L91.7474 48.0172H93.64L94.8783 55.5485H94.9095L96.2296 48.0172H96.2374Z" fill="rgba(255,255,255,0.55)"/>
-                            <path d="M103.216 50.882C103.216 49.2131 104.193 47.853 106.316 47.853C108.438 47.853 109.415 49.2131 109.415 50.882V56.9711C109.415 58.6399 108.438 60 106.316 60C104.193 60 103.216 58.6399 103.216 56.9711V50.882ZM105.241 56.9242C105.241 57.8074 105.502 58.2335 106.316 58.2335C107.129 58.2335 107.394 57.8074 107.394 56.9242V50.9328C107.394 50.0495 107.133 49.6235 106.316 49.6235C105.498 49.6235 105.241 50.0495 105.241 50.9328V56.9242Z" fill="rgba(255,255,255,0.55)"/>
-                            <path d="M113.006 59.8359H110.981V48.0172H113.82C116.086 48.0172 117.247 48.9825 117.247 51.5034C117.247 53.4028 116.514 54.1727 115.829 54.4815L117.543 59.8359H115.486L114.049 54.9388C113.789 54.97 113.364 54.9896 113.006 54.9896V59.8359ZM113.006 53.3207H113.722C114.817 53.3207 115.222 52.9104 115.222 51.5034C115.222 50.0964 114.813 49.686 113.722 49.686H113.006V53.3207Z" fill="rgba(255,255,255,0.55)"/>
-                            <path d="M118.648 59.8359V48.0172H120.67V58.0693H123.851V59.8359H118.648Z" fill="rgba(255,255,255,0.55)"/>
-                            <path d="M124.7 48.0172H127.702C129.79 48.0172 130.9 49.1623 130.9 51.5855V56.2676C130.9 58.6907 129.79 59.8359 127.702 59.8359H124.7V48.0172ZM126.721 58.167H127.422C128.497 58.167 128.875 57.7566 128.875 56.5138V51.3392C128.875 50.0964 128.501 49.686 127.422 49.686H126.721V58.167Z" fill="rgba(255,255,255,0.55)"/>
-                            <path d="M139.775 51.9646V51.0461C139.775 50.0456 139.319 49.6235 138.797 49.6235C137.983 49.6235 137.722 50.0495 137.722 50.9328V56.9242C137.722 57.8074 137.983 58.2335 138.797 58.2335C139.529 58.2335 139.775 57.8075 139.775 57.0375V55.6149H141.796V56.975C141.796 58.6438 140.818 60.0039 138.793 60.0039C136.768 60.0039 135.693 58.6438 135.693 56.975V50.8859C135.693 49.217 136.671 47.857 138.793 47.857C140.916 47.857 141.796 49.3304 141.796 51.0969V51.9646H139.775Z" fill="rgba(255,255,255,0.55)"/>
-                            <path d="M143.361 59.8359V48.0172H145.382V58.0693H148.564V59.8359H143.361Z" fill="rgba(255,255,255,0.55)"/>
-                            <path d="M150.589 59.8359H148.63L150.799 48.0172H153.311L155.48 59.8359H153.521L153.163 57.2173H150.943L150.585 59.8359H150.589ZM151.239 55.4508H152.871L152.072 50.3739H152.041L151.243 55.4508H151.239Z" fill="rgba(255,255,255,0.55)"/>
-                            <path d="M159.95 50.9328C159.869 49.9166 159.331 49.6235 158.872 49.6235C158.221 49.6235 157.859 50.0495 157.859 50.7843C157.859 52.797 161.972 53.7624 161.972 56.9711C161.972 58.9213 160.667 60 158.774 60C156.897 60 155.823 58.4953 155.741 56.7249L157.665 56.4474C157.746 57.6433 158.221 58.2335 158.872 58.2335C159.573 58.2335 160.048 57.8583 160.048 57.1548C160.048 54.8137 155.935 54.1923 155.935 50.8038C155.935 48.92 157.076 47.857 159.066 47.857C160.714 47.857 161.691 49.0529 161.874 50.7217L159.95 50.9328Z" fill="rgba(255,255,255,0.55)"/>
-                            <path d="M166.8 50.9328C166.718 49.9166 166.181 49.6235 165.722 49.6235C165.071 49.6235 164.709 50.0495 164.709 50.7843C164.709 52.797 168.821 53.7624 168.821 56.9711C168.821 58.9213 167.517 60 165.624 60C163.732 60 162.672 58.4953 162.591 56.7249L164.514 56.4474C164.596 57.6433 165.071 58.2335 165.722 58.2335C166.423 58.2335 166.898 57.8583 166.898 57.1548C166.898 54.8137 162.785 54.1923 162.785 50.8038C162.785 48.92 163.926 47.857 165.916 47.857C167.564 47.857 168.541 49.0529 168.724 50.7217L166.8 50.9328Z" fill="rgba(255,255,255,0.55)"/>
-                            <path d="M169.838 59.8359V57.9052H171.762V59.8359H169.838Z" fill="rgba(255,255,255,0.55)"/>
-                            <path d="M176.427 50.882C176.427 49.2131 177.404 47.853 179.527 47.853C181.649 47.853 182.626 49.2131 182.626 50.882V56.9711C182.626 58.6399 181.649 60 179.527 60C177.404 60 176.427 58.6399 176.427 56.9711V50.882ZM178.448 56.9242C178.448 57.8074 178.709 58.2335 179.523 58.2335C180.337 58.2335 180.597 57.8074 180.597 56.9242V50.9328C180.597 50.0495 180.337 49.6235 179.523 49.6235C178.709 49.6235 178.448 50.0495 178.448 50.9328V56.9242Z" fill="rgba(255,255,255,0.55)"/>
-                            <path d="M184.192 48.0172H186.213V56.9398C186.213 57.8075 186.556 58.2335 187.288 58.2335C188.02 58.2335 188.366 57.8075 188.366 56.9398V48.0172H190.387V56.8577C190.387 58.8861 189.211 60 187.288 60C185.364 60 184.188 58.8861 184.188 56.8577V48.0172H184.192Z" fill="rgba(255,255,255,0.55)"/>
-                            <path d="M193.978 59.8359H191.953V48.0172H194.792C197.058 48.0172 198.219 48.9825 198.219 51.5034C198.219 53.4028 197.487 54.1727 196.801 54.4815L198.515 59.8359H196.459L195.022 54.9388C194.761 54.97 194.336 54.9896 193.978 54.9896V59.8359ZM193.978 53.3207H194.694C195.789 53.3207 196.194 52.9104 196.194 51.5034C196.194 50.0964 195.785 49.686 194.694 49.686H193.978V53.3207Z" fill="rgba(255,255,255,0.55)"/>
-                            <path d="M207.027 51.9646V51.0461C207.027 50.0456 206.572 49.6235 206.05 49.6235C205.236 49.6235 204.975 50.0495 204.975 50.9328V56.9242C204.975 57.8074 205.236 58.2335 206.05 58.2335C206.782 58.2335 207.027 57.8075 207.027 57.0375V55.6149H209.048V56.975C209.048 58.6438 208.071 60.0039 206.046 60.0039C204.021 60.0039 202.946 58.6438 202.946 56.975V50.8859C202.946 49.217 203.924 47.857 206.046 47.857C208.168 47.857 209.048 49.3304 209.048 51.0969V51.9646H207.027Z" fill="rgba(255,255,255,0.55)"/>
-                            <path d="M210.614 59.8359V48.0172H212.635V58.0693H215.817V59.8359H210.614Z" fill="rgba(255,255,255,0.55)"/>
-                            <path d="M217.842 59.8359H215.883L218.052 48.0172H220.564L222.733 59.8359H220.774L220.416 57.2173H218.196L217.838 59.8359H217.842ZM218.496 55.4508H220.127L219.329 50.3739H219.298L218.5 55.4508H218.496Z" fill="rgba(255,255,255,0.55)"/>
-                            <path d="M227.203 50.9328C227.121 49.9166 226.584 49.6235 226.128 49.6235C225.474 49.6235 225.116 50.0495 225.116 50.7843C225.116 52.797 229.228 53.7624 229.228 56.9711C229.228 58.9213 227.924 60 226.031 60C224.154 60 223.079 58.4953 222.997 56.7249L224.921 56.4474C225.003 57.6433 225.474 58.2335 226.128 58.2335C226.829 58.2335 227.301 57.8583 227.301 57.1548C227.301 54.8137 223.188 54.1923 223.188 50.8038C223.188 48.92 224.329 47.857 226.319 47.857C227.966 47.857 228.944 49.0529 229.123 50.7217L227.199 50.9328H227.203Z" fill="rgba(255,255,255,0.55)"/>
-                            <path d="M234.057 50.9328C233.975 49.9166 233.438 49.6235 232.978 49.6235C232.328 49.6235 231.966 50.0495 231.966 50.7843C231.966 52.797 236.078 53.7624 236.078 56.9711C236.078 58.9213 234.774 60 232.881 60C230.988 60 229.929 58.4953 229.847 56.7249L231.771 56.4474C231.853 57.6433 232.328 58.2335 232.978 58.2335C233.679 58.2335 234.154 57.8583 234.154 57.1548C234.154 54.8137 230.042 54.1923 230.042 50.8038C230.042 48.92 231.183 47.857 233.173 47.857C234.82 47.857 235.798 49.0529 235.981 50.7217L234.057 50.9328Z" fill="rgba(255,255,255,0.55)"/>
-                            <path d="M237.091 59.8359V57.9052H239.014V59.8359H237.091Z" fill="rgba(255,255,255,0.55)"/>
-                            </g>
-                            <defs>
-                                <clipPath id="clip-logo-carne">
-                                    <rect width="255" height="60" fill="white"/>
-                                </clipPath>
-                            </defs>
-                        </svg>
-                    </div>
-                    <div class="badge-estudiante">Carné Estudiantil</div>
-                </div>
-
-                <div class="front-body">
-                    <!-- Área de foto: abre el selector de archivo y muestra la imagen cargada -->
-                    <div class="photo-area">
-                        <div class="photo-box" onclick="triggerPhoto(event)" title="Toca para agregar foto">
-                            <img id="photo-img" src="" alt="Foto">
-                            <div class="photo-hint" id="photo-hint">
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                                    <circle cx="12" cy="7" r="4"/>
-                                </svg>
-                                <span>Agregar<br>foto</span>
-                            </div>
-                        </div>
-                        <input type="file" id="photo-input" accept="image/*" onchange="loadPhoto(event)">
-                    </div>
-
-                    <!-- Información principal del estudiante -->
-                    <div class="front-info">
-                        <div class="field">
-                            <span class="field-lbl">Titular</span>
-                            <span class="field-val name">Andrés Vargas Castillo</span>
-                        </div>
-                        <div class="field">
-                            <span class="field-lbl">Programas académicos</span>
-                            <div class="career-list">
-                                <div class="career-item">Bach. Mercadeo y Medios Digitales</div>
-                                <div class="career-item">Bach. Publicidad con énfasis en Producción Multimedia</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Datos de identificación y periodo de validez -->
-                <div class="front-footer">
-                    <div class="id-block">
-                        <span class="field-lbl" style="font-size: 6.5px;">ID Estudiantil</span>
-                        <span class="id-number">7-0294-0499</span>
-                    </div>
-                    <div class="validity-block" style="text-align: right; display: flex; flex-direction: column; gap: 1px;">
-                        <span class="field-lbl" style="font-size: 6.5px;">Válido desde — hasta:</span>
-                        <div class="validity-date">MAYO 2022 — ABRIL 2027</div>
-                    </div>
-                </div>
-            </div>
+            <span class="login-brand-name">ULACIT</span>
         </div>
-
-        <!-- Reverso del carné: contacto, QR, código de barras e información institucional -->
-        <div class="card-face card-back">
-            <div class="back-content">
-                <div class="back-mag"></div>
-
-                <div class="back-body">
-                    <div class="back-left">
-                        <div class="back-univ-name">
-                            Universidad<br>Latinoamericana de<br>Ciencia y Tecnología
-                        </div>
-
-                        <div class="back-contact">
-                            <div class="contact-row">
-                                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                                <span><strong>+506 4003-1391</strong></span>
-                            </div>
-                            <div class="contact-row">
-                                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                                <span><strong>ulacit.ac.cr</strong></span>
-                            </div>
-                            <div class="contact-row">
-                                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                                <span>info@ulacit.ac.cr</span>
-                            </div>
-                            <div class="contact-row">
-                                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                                <span>Barrio Tournón, San José</span>
-                            </div>
-                        </div>
-
-                        <div class="back-disclaimer">
-                            Este carné es <strong style="color:rgba(255,255,255,0.45)">intransferible</strong>.<br>
-                            Si lo encuentra, llame al +506 8594-7526.
-                        </div>
-                    </div>
-
-                    <!-- Código QR generado desde JavaScript para verificar el ID -->
-                    <div class="back-right">
-                        <div class="qr-box">
-                            <div id="qr-div"></div>
-                        </div>
-                        <div class="qr-label">Verificar ID</div>
-                    </div>
-                </div>
-
-                <!-- Código de barras visual generado desde JavaScript -->
-                <div class="back-barcode">
-                    <div class="barcode-wrap">
-                        <div class="bars" id="barcode-bars"></div>
-                        <div class="barcode-text">7 · 0294 · 0499</div>
-                    </div>
-                </div>
-
-                <div class="back-colorbar"></div>
-            </div>
-        </div>
-
+        <div class="login-title">Acceso privado</div>
+        <div class="login-subtitle">Carné del titular</div>
+        <input type="text" id="input-usuario" class="login-input" placeholder="Usuario" autocomplete="username" autocapitalize="none">
+        <input type="password" id="input-contrasena" class="login-input" placeholder="Contraseña" autocomplete="current-password">
+        <button id="btn-login" class="login-btn">Ingresar</button>
+        <div id="login-error" class="login-error"></div>
     </div>
-</div>
-
-<!-- FLIP DESACTIVADO TEMPORALMENTE
-     <p class="tap-hint">↺ &nbsp; toca la tarjeta para voltear</p>
-     -->
-
-<!-- Botones de acción para guardar el carné o ver instrucciones de Wallet -->
-<div class="actions">
-    <button class="btn btn-save" onclick="saveAsImage()">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-        </svg>
-        Guardar imagen
-    </button>
-    <button class="btn btn-info" onclick="toggleWallet()">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="1" y="4" width="22" height="16" rx="2"/>
-            <line x1="1" y1="10" x2="23" y2="10"/>
-        </svg>
-        Apple Wallet
-    </button>
-</div>
-
-<!-- Panel informativo con pasos para usar el carné en iPhone -->
-<div class="wallet-panel" id="walletPanel">
-    <div class="wallet-panel-title">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="12" y1="8" x2="12" y2="12"/>
-            <line x1="12" y1="16" x2="12.01" y2="16"/>
-        </svg>
-        Cómo tener el carné en iPhone
-    </div>
-    <ul class="wallet-steps">
-        <li class="highlight">
-            <span class="num">★</span>
-            Opción más fácil: Safari → este archivo → ícono compartir → <strong>"Añadir a pantalla de inicio"</strong> → queda como app en home screen
-        </li>
-        <li>
-            <span class="num">1.</span>
-            O toca "Guardar imagen" → descarga PNG al dispositivo
-        </li>
-        <li>
-            <span class="num">2.</span>
-            Fotos → foto del carné → corazón para destacar → acceso rápido
-        </li>
-        <li>
-            <span class="num">⚡</span>
-            Wallet nativo (.pkpass) requiere Apple Developer Program ($99/año) + servidor HTTPS + certificado firmado por Apple
-        </li>
-    </ul>
-</div>
-
-<!-- Archivo JavaScript principal: controla el volteo, carga de foto, QR, código de barras y guardado -->
-<script src="js/main.js"></script>
+    <script src="js/login.js"></script>
 </body>
 </html>

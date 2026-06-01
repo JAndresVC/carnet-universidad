@@ -39,12 +39,15 @@
     border: 0;
 }
 
-/* Main landmark without an explicit class (admin + login pages) must not
-   create a new layout box — body's flex gap and alignment apply directly
-   to its children. display:contents removes the box while keeping the
-   element in the accessibility tree as a landmark. */
+/* Main landmark without an explicit class (admin + login pages):
+   replicate body's flex column behaviour so the landmark doesn't
+   break spacing or alignment. */
 body > main:not([class]) {
-    display: contents;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
 }
 
 body {

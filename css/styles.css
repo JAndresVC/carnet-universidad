@@ -39,6 +39,14 @@
     border: 0;
 }
 
+/* Main landmark without an explicit class (admin + login pages) must not
+   create a new layout box — body's flex gap and alignment apply directly
+   to its children. display:contents removes the box while keeping the
+   element in the accessibility tree as a landmark. */
+body > main:not([class]) {
+    display: contents;
+}
+
 body {
     min-height: 100vh;
     background: radial-gradient(ellipse at 30% 20%, #1a0d30 0%, #0d0718 50%, #060410 100%);

@@ -1,21 +1,3 @@
-function cropPhotoToCardRatio(src) {
-    return new Promise(resolve => {
-        const img = new Image();
-        img.onload = () => {
-            const W = 1520, H = 1900;
-            const canvas = document.createElement('canvas');
-            canvas.width = W; canvas.height = H;
-            const ctx = canvas.getContext('2d');
-            const scale = Math.max(W / img.width, H / img.height);
-            const sw = W / scale, sh = H / scale;
-            const sx = (img.width - sw) / 2, sy = (img.height - sh) / 2;
-            ctx.drawImage(img, sx, sy, sw, sh, 0, 0, W, H);
-            resolve(canvas.toDataURL('image/jpeg', 0.96));
-        };
-        img.onerror = () => resolve(src);
-        img.src = src;
-    });
-}
 
 const DEFAULT_STATE = {
     nombre: '', id: '', institucion: '',
@@ -145,10 +127,10 @@ function updateFreePreview() {
 
     const validEl = scene.querySelector('#free-validity-display');
     if (state.desde || state.hasta) {
-        validEl.textContent = `${(state.desde || '???').toUpperCase()} — ${(state.hasta || '???').toUpperCase()}`;
+        validEl.textContent = `${(state.desde || '???').toUpperCase()} / ${(state.hasta || '???').toUpperCase()}`;
         validEl.classList.remove('free-placeholder');
     } else {
-        validEl.textContent = 'DESDE — HASTA';
+        validEl.textContent = 'DESDE / HASTA';
         validEl.classList.add('free-placeholder');
     }
 
@@ -237,6 +219,11 @@ function loadFreeLogo(event) {
 }
 
 async function saveFreeImage() {
+    const btn = document.querySelector('.free-btn-save');
+    const origHTML = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span>Guardando…</span>';
+
     const scene = document.getElementById('free-cardScene');
     const front = scene.querySelector('.card-front');
     const EXPORT_SCALE = 6;
@@ -253,15 +240,15 @@ async function saveFreeImage() {
 
     const prevWidth = scene.style.width;
     const prevHeight = scene.style.height;
+    const photo = scene.querySelector('#free-photo-img');
+    let prevSrc = null;
     let canvas;
 
     try {
         scene.style.width = `${EXPORT_WIDTH}px`;
         scene.style.height = `${EXPORT_HEIGHT}px`;
 
-        const photo = scene.querySelector('#free-photo-img');
-        let prevSrc = null;
-        if (photo && photo.src && photo.style.display !== 'none') {
+        if (state.foto) {
             prevSrc = photo.src;
             photo.src = await cropPhotoToCardRatio(photo.src);
         }
@@ -278,11 +265,12 @@ async function saveFreeImage() {
             useCORS: true,
             logging: false
         });
-
-        if (photo && prevSrc !== null) photo.src = prevSrc;
     } finally {
+        if (prevSrc !== null) photo.src = prevSrc;
         scene.style.width = prevWidth;
         scene.style.height = prevHeight;
+        btn.disabled = false;
+        btn.innerHTML = origHTML;
     }
 
     const a = document.createElement('a');

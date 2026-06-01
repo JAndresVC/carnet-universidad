@@ -103,6 +103,17 @@ body:has(.ulacit-nav) {
     color: rgba(255, 255, 255, 0.85);
 }
 
+.nav-link:focus-visible {
+    outline: 2px solid #a78bfa;
+    outline-offset: -3px;
+    color: #ffffff;
+}
+
+.nav-logout:focus-visible {
+    outline: 2px solid #a78bfa;
+    outline-offset: 2px;
+}
+
 /* ── Espaciado del contenido bajo la navbar ── */
 body:has(.ulacit-nav) .card-scene,
 body:has(.ulacit-nav) .actions,

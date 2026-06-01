@@ -321,13 +321,14 @@
             align-items: center;
             justify-content: center;
             gap: 7px;
-            padding: 11px 20px;
+            padding: 13px 20px;
             border-radius: 50px;
             border: none;
             font-size: 13px;
             font-weight: 600;
             font-family: inherit;
             cursor: pointer;
+            min-height: 44px;
             transition: all 0.2s;
             background: #F0EBF8;
             color: #2C1B45;
@@ -337,7 +338,28 @@
         .free-btn-save:hover {
             background: #ffffff;
             transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(200, 168, 76, 0.3);
+        }
+
+        .free-btn-save:focus-visible {
+            outline: 2px solid #a78bfa;
+            outline-offset: 3px;
+        }
+
+        .free-btn-save:disabled {
+            opacity: 0.6;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .free-btn-save,
+            .free-upload-btn,
+            .free-font-btn,
+            .free-barra-opt,
+            .free-shape-opt,
+            .free-input {
+                transition: none !important;
+            }
         }
 
         .free-preview-label {
@@ -543,6 +565,7 @@
         <li><a href="generador-ulacit.html" class="nav-link">Generador ULACIT</a></li>
         <li><a href="generador-libre.html" class="nav-link active">Generador libre</a></li>
     </ul>
+    <button class="nav-logout" onclick="sessionStorage.removeItem('ulacit_auth'); location.href='index.html';">Cerrar sesión</button>
 </nav>
 
 <div class="free-page">
@@ -818,8 +841,8 @@
                                 </div>
 
                                 <div class="validity-block" style="text-align:right; display:flex; flex-direction:column; gap:1px;">
-                                    <span class="field-lbl" style="font-size:6.5px;">Válido desde — hasta:</span>
-                                    <div class="validity-date free-placeholder" id="free-validity-display">DESDE — HASTA</div>
+                                    <span class="field-lbl" style="font-size:6.5px;">Válido desde / hasta:</span>
+                                    <div class="validity-date free-placeholder" id="free-validity-display">DESDE / HASTA</div>
                                 </div>
                             </div>
                         </div>
@@ -849,6 +872,7 @@
 
 </div><!-- /.free-page -->
 
+<script src="js/utils.js"></script>
 <script src="js/generador-libre.js"></script>
 </body>
 </html>

@@ -1,25 +1,3 @@
-function cropPhotoToCardRatio(src) {
-    return new Promise(resolve => {
-        const img = new Image();
-        img.onload = () => {
-            const W = 1520;
-            const H = 1900;
-            const canvas = document.createElement('canvas');
-            canvas.width = W;
-            canvas.height = H;
-            const ctx = canvas.getContext('2d');
-            const scale = Math.max(W / img.width, H / img.height);
-            const sw = W / scale;
-            const sh = H / scale;
-            const sx = (img.width - sw) / 2;
-            const sy = (img.height - sh) / 2;
-            ctx.drawImage(img, sx, sy, sw, sh, 0, 0, W, H);
-            resolve(canvas.toDataURL('image/jpeg', 0.96));
-        };
-        img.onerror = () => resolve(src);
-        img.src = src;
-    });
-}
 
 function setOrPlaceholder(el, value, placeholder) {
     if (value) {
@@ -56,10 +34,10 @@ function updatePreview() {
 
     const validityEl = scope.querySelector('.validity-date');
     if (desde || hasta) {
-        validityEl.textContent = `${(desde || '???').toUpperCase()} — ${(hasta || '???').toUpperCase()}`;
+        validityEl.textContent = `${(desde || '???').toUpperCase()} / ${(hasta || '???').toUpperCase()}`;
         validityEl.classList.remove('gen-placeholder');
     } else {
-        validityEl.textContent = 'DESDE — HASTA';
+        validityEl.textContent = 'DESDE / HASTA';
         validityEl.classList.add('gen-placeholder');
     }
 }
@@ -90,6 +68,11 @@ function loadGenPhoto(event) {
 }
 
 async function saveGenImage() {
+    const btn = document.querySelector('.gen-btn-save');
+    const origHTML = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span>Guardando…</span>';
+
     const scope = document.getElementById('gen-cardScene');
     const front = scope.querySelector('.card-front');
     const EXPORT_SCALE = 6;
@@ -115,7 +98,7 @@ async function saveGenImage() {
         scope.style.width  = `${EXPORT_WIDTH}px`;
         scope.style.height = `${EXPORT_HEIGHT}px`;
 
-        if (photo && photo.src && photo.style.display !== 'none') {
+        if (photo && photo.src.startsWith('data:')) {
             photo.src = await cropPhotoToCardRatio(photo.src);
         }
 
@@ -135,6 +118,8 @@ async function saveGenImage() {
         if (photo && prevSrc !== null) photo.src = prevSrc;
         scope.style.width  = prevWidth;
         scope.style.height = prevHeight;
+        btn.disabled = false;
+        btn.innerHTML = origHTML;
     }
 
     const a = document.createElement('a');

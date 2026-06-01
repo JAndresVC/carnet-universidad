@@ -1,34 +1,43 @@
 /* ════════════════════════════════════════════
-   CÓDIGO QR
-   Genera un QR con el URL de ULACIT usando la
-   API promise-based de qrcode (toDataURL).
-   Si falla (offline sin lib), muestra el ID en texto.
+   PERFIL — cargado desde sessionStorage
 ════════════════════════════════════════════ */
-QRCode.toDataURL(
-    'https://ulacit.ac.cr',
-    {
-        width: 88,
-        margin: 1,
-        color: { dark: '#1e0f35', light: '#ffffff' },
-        errorCorrectionLevel: 'M'
-    }
-).then(url => {
-    const img = document.createElement('img');
-    img.src = url;
-    img.width = 88;
-    img.height = 88;
-    img.style.display = 'block';
-    document.getElementById('qr-div').appendChild(img);
-}).catch(() => {
-    /* Fallback visual si la librería falla */
-    document.getElementById('qr-div').innerHTML =
-        '<div style="width:88px;height:88px;display:flex;align-items:center;justify-content:center;font-size:7px;color:#1e0f35;text-align:center;padding:4px;">7-0294-0499</div>';
-});
+(function() {
+    let profile;
+    try { profile = JSON.parse(sessionStorage.getItem('ulacit_profile')); } catch(e) {}
+    if (!profile) return;
+
+    const set = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
+
+    set('admin-nombre', profile.nombre);
+    set('admin-id', profile.id);
+    set('admin-validez', profile.validez);
+    set('admin-telefono', profile.telefono);
+    set('admin-whatsapp', profile.whatsapp);
+    set('admin-barcode-text', profile.idBarcode);
+
+    const [c1, c2] = profile.carreras;
+    set('admin-carrera1', c1 || '');
+    const c2el = document.getElementById('admin-carrera2');
+    if (c2el) { c2el.textContent = c2 || ''; c2el.style.display = c2 ? '' : 'none'; }
+
+    /* QR y fallback usan el ID del perfil */
+    QRCode.toDataURL(
+        'https://ulacit.ac.cr',
+        { width: 88, margin: 1, color: { dark: '#1e0f35', light: '#ffffff' }, errorCorrectionLevel: 'M' }
+    ).then(url => {
+        const img = document.createElement('img');
+        img.src = url; img.width = 88; img.height = 88; img.style.display = 'block';
+        document.getElementById('qr-div').appendChild(img);
+    }).catch(() => {
+        document.getElementById('qr-div').innerHTML =
+            `<div style="width:88px;height:88px;display:flex;align-items:center;justify-content:center;font-size:7px;color:#1e0f35;text-align:center;padding:4px;">${profile.id}</div>`;
+    });
+})();
 
 /* ════════════════════════════════════════════
    CÓDIGO DE BARRAS
    Genera las barras usando un array de anchos
-   predefinidos basado en el ID 7-0294-0499.
+   predefinidos basado en el ID del perfil.
    Barras pares = oscuras, impares = transparentes.
 ════════════════════════════════════════════ */
 (function() {
@@ -64,30 +73,6 @@ function applyPhoto(base64) {
     document.getElementById('photo-hint').style.display = 'none';
 }
 
-function cropPhotoToCardRatio(src) {
-    return new Promise(resolve => {
-        const img = new Image();
-        img.onload = () => {
-            const W = 1520;
-            const H = 1900;
-            const canvas = document.createElement('canvas');
-            canvas.width = W;
-            canvas.height = H;
-            const ctx = canvas.getContext('2d');
-
-            const scale = Math.max(W / img.width, H / img.height);
-            const sw = W / scale;
-            const sh = H / scale;
-            const sx = (img.width - sw) / 2;
-            const sy = (img.height - sh) / 2;
-
-            ctx.drawImage(img, sx, sy, sw, sh, 0, 0, W, H);
-            resolve(canvas.toDataURL('image/jpeg', 0.96));
-        };
-        img.onerror = () => resolve(src);
-        img.src = src;
-    });
-}
 
 function loadPhoto(event) {
     const file = event.target.files[0];
@@ -143,6 +128,11 @@ function toggleWallet() {
    6x la tarjeta visible de 400×252 px.
 ════════════════════════════════════════════ */
 async function saveAsImage() {
+    const btn = document.querySelector('.btn-save');
+    const origHTML = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span>Guardando…</span>';
+
     const front = document.querySelector('.card-front');
     const scene = document.getElementById('cardScene');
     const EXPORT_SCALE = 6;
@@ -161,7 +151,7 @@ async function saveAsImage() {
         scene.style.width = `${EXPORT_WIDTH}px`;
         scene.style.height = `${EXPORT_HEIGHT}px`;
 
-        if (photo.src) {
+        if (photo.src.startsWith('data:')) {
             photo.src = await cropPhotoToCardRatio(photo.src);
         }
 
@@ -182,10 +172,16 @@ async function saveAsImage() {
         scene.style.width = previousWidth;
         scene.style.height = previousHeight;
         if (wasFlipped) scene.classList.add('flipped');
+        btn.disabled = false;
+        btn.innerHTML = origHTML;
     }
 
+    const nombre = document.getElementById('admin-nombre')?.textContent?.trim() || 'ulacit';
+    const slug = nombre.toLowerCase()
+        .normalize('NFD').replace(/[̀-ͯ]/g, '')
+        .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
     const a = document.createElement('a');
-    a.download = 'carne-ulacit-andres-vargas.png';
+    a.download = `carne-ulacit-${slug}.png`;
     a.href = canvas.toDataURL('image/png');
     a.click();
 }

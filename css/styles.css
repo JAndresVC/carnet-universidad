@@ -63,7 +63,6 @@ body::before {
     width: var(--card-w);
     height: var(--card-h);
     perspective: 1200px;
-    cursor: pointer;
     position: relative;
     z-index: 1;
 }
@@ -238,6 +237,7 @@ body::before {
     flex-direction: column;
     align-items: center;
     gap: 5px;
+    padding: 8px;
 }
 
 .photo-hint svg { opacity: 0.4; }
@@ -270,7 +270,7 @@ body::before {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.4px;
-    color: var(--purple-light);
+    color: #a78bfa;
 }
 
 .field-val {
@@ -308,7 +308,7 @@ body::before {
     content: '▸';
     position: absolute;
     left: 0;
-    color: var(--icon-lime);
+    color: #a78bfa;
     font-size: 8px;
 }
 
@@ -556,13 +556,25 @@ body::before {
     display: flex;
     align-items: center;
     gap: 7px;
-    padding: 11px 20px;
+    padding: 13px 20px;
     border-radius: 50px;
     border: none;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
+    min-height: 44px;
     transition: all 0.2s;
+}
+
+.btn:focus-visible {
+    outline: 2px solid #a78bfa;
+    outline-offset: 3px;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: default;
+    pointer-events: none;
 }
 
 .btn-save {
@@ -573,7 +585,6 @@ body::before {
 .btn-save:hover {
     background: white;
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(200,168,76,0.3);
 }
 
 .btn-info {
@@ -642,5 +653,17 @@ body::before {
     :root {
         --card-w: calc(100vw - 32px);
         --card-h: calc((100vw - 32px) * 0.63);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .card-inner,
+    .card-face,
+    .btn,
+    .btn-save,
+    .btn-info,
+    .photo-box,
+    .wallet-panel {
+        transition: none !important;
     }
 }

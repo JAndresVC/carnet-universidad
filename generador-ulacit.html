@@ -144,12 +144,13 @@
             align-items: center;
             justify-content: center;
             gap: 7px;
-            padding: 11px 20px;
+            padding: 13px 20px;
             border-radius: 50px;
             border: none;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
+            min-height: 44px;
             transition: all 0.2s;
             background: #F0EBF8;
             color: #2C1B45;
@@ -160,7 +161,41 @@
         .gen-btn-save:hover {
             background: #ffffff;
             transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(200, 168, 76, 0.3);
+        }
+
+        .gen-btn-save:focus-visible {
+            outline: 2px solid #a78bfa;
+            outline-offset: 3px;
+        }
+
+        .gen-btn-save:disabled {
+            opacity: 0.6;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .gen-btn-save,
+            .gen-photo-btn,
+            .gen-input {
+                transition: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .gen-layout {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .gen-form-col {
+                width: 100%;
+            }
+
+            .gen-preview-col {
+                width: 100%;
+                order: -1;
+            }
         }
 
         /* ── Columna preview ── */
@@ -215,6 +250,7 @@
         <li><a href="generador-ulacit.html" class="nav-link active">Generador ULACIT</a></li>
         <li><a href="generador-libre.html" class="nav-link">Generador libre</a></li>
     </ul>
+    <button class="nav-logout" onclick="sessionStorage.removeItem('ulacit_auth'); location.href='index.html';">Cerrar sesión</button>
 </nav>
 
 <div class="gen-page">
@@ -390,7 +426,7 @@
                                     <span class="id-number gen-placeholder">0-0000-0000</span>
                                 </div>
                                 <div class="validity-block" style="text-align: right; display: flex; flex-direction: column; gap: 1px;">
-                                    <span class="field-lbl" style="font-size: 6.5px;">Válido desde — hasta:</span>
+                                    <span class="field-lbl" style="font-size: 6.5px;">Válido desde / hasta:</span>
                                     <div class="validity-date gen-placeholder">DESDE — HASTA</div>
                                 </div>
                             </div>
@@ -406,6 +442,7 @@
     </div><!-- /.gen-layout -->
 </div><!-- /.gen-page -->
 
+<script src="js/utils.js"></script>
 <script src="js/generador-ulacit.js"></script>
 </body>
 </html>

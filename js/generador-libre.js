@@ -151,15 +151,23 @@ function setFont(font, btn) {
 
 function setBarra(barra, el) {
     state.barra = barra;
-    document.querySelectorAll('.free-barra-opt').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.free-barra-opt').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+    });
     el.classList.add('active');
+    el.setAttribute('aria-pressed', 'true');
     updateFreePreview();
 }
 
 function setShape(radius, el) {
     state.radio = radius;
-    document.querySelectorAll('.free-shape-opt').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.free-shape-opt').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+    });
     el.classList.add('active');
+    el.setAttribute('aria-pressed', 'true');
     updateFreePreview();
 }
 

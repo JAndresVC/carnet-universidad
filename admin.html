@@ -3,7 +3,7 @@
 <head>
     <!-- Configuración general de la página y recursos externos -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Carné ULACIT">
@@ -35,7 +35,8 @@
     <button class="nav-logout" onclick="sessionStorage.removeItem('ulacit_auth'); location.href='index.html';">Cerrar sesión</button>
 </nav>
 
-<!-- Contenedor principal: permite voltear el carné al tocarlo -->
+<main>
+<h1 class="sr-only">Mi carné · ULACIT</h1>
 
 <div class="card-scene" id="cardScene">
     <div class="card-inner" id="cardInner">
@@ -112,7 +113,7 @@
                 <div class="front-body">
                     <!-- Área de foto: abre el selector de archivo y muestra la imagen cargada -->
                     <div class="photo-area">
-                        <div class="photo-box" onclick="triggerPhoto(event)" title="Toca para agregar foto">
+                        <div class="photo-box" onclick="triggerPhoto(event)" role="button" tabindex="0" aria-label="Agregar foto">
                             <img id="photo-img" src="" alt="Foto">
                             <div class="photo-hint" id="photo-hint">
                                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
@@ -268,7 +269,7 @@
     </ul>
 </div>
 
-<!-- Archivo JavaScript principal: controla el volteo, carga de foto, QR, código de barras y guardado -->
+</main>
 <script src="js/utils.js"></script>
 <script src="js/main.js"></script>
 </body>

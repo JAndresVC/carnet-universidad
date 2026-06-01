@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Generador Libre · Carné Digital</title>
     <link rel="stylesheet" href="css/styles.css">
@@ -568,7 +568,8 @@
     <button class="nav-logout" onclick="sessionStorage.removeItem('ulacit_auth'); location.href='index.html';">Cerrar sesión</button>
 </nav>
 
-<div class="free-page">
+<main class="free-page">
+<h1 class="sr-only">Generador libre · Carné Digital</h1>
     <div class="free-layout">
 
         <!-- ════════════════ COLUMNA 1 — DATOS ════════════════ -->
@@ -689,25 +690,25 @@
 
                 <!-- BARRA DE COLORES -->
                 <div class="free-section-label">Barra inferior</div>
-                <div class="free-barra-opts">
-                    <div class="free-barra-opt active" data-barra="ulacit" onclick="setBarra('ulacit', this)">
-                        <div class="barra-preview" style="background:linear-gradient(90deg,#5B55D6 0%,#5B55D6 25%,#2EBD6E 25%,#2EBD6E 50%,#7CC840 50%,#7CC840 75%,#F07840 75%,#F07840 100%)"></div>
+                <div class="free-barra-opts" role="group" aria-label="Estilo de barra inferior">
+                    <div class="free-barra-opt active" data-barra="ulacit" onclick="setBarra('ulacit', this)" role="button" tabindex="0" aria-pressed="true">
+                        <div class="barra-preview" style="background:linear-gradient(90deg,#5B55D6 0%,#5B55D6 25%,#2EBD6E 25%,#2EBD6E 50%,#7CC840 50%,#7CC840 75%,#F07840 75%,#F07840 100%)" aria-hidden="true"></div>
                         <span>ULACIT</span>
                     </div>
-                    <div class="free-barra-opt" data-barra="solid" onclick="setBarra('solid', this)">
-                        <div class="barra-preview" id="barra-solid-preview" style="background:#a78bfa"></div>
+                    <div class="free-barra-opt" data-barra="solid" onclick="setBarra('solid', this)" role="button" tabindex="0" aria-pressed="false">
+                        <div class="barra-preview" id="barra-solid-preview" style="background:#a78bfa" aria-hidden="true"></div>
                         <span>Sólido</span>
                     </div>
-                    <div class="free-barra-opt" data-barra="gradient" onclick="setBarra('gradient', this)">
-                        <div class="barra-preview" id="barra-gradient-preview" style="background:linear-gradient(90deg,#2C1B45,#a78bfa)"></div>
+                    <div class="free-barra-opt" data-barra="gradient" onclick="setBarra('gradient', this)" role="button" tabindex="0" aria-pressed="false">
+                        <div class="barra-preview" id="barra-gradient-preview" style="background:linear-gradient(90deg,#2C1B45,#a78bfa)" aria-hidden="true"></div>
                         <span>Degra&shy;dado</span>
                     </div>
-                    <div class="free-barra-opt" data-barra="rainbow" onclick="setBarra('rainbow', this)">
-                        <div class="barra-preview" style="background:linear-gradient(90deg,#ff6b6b,#ffd93d,#6bcb77,#4d96ff,#c77dff)"></div>
+                    <div class="free-barra-opt" data-barra="rainbow" onclick="setBarra('rainbow', this)" role="button" tabindex="0" aria-pressed="false">
+                        <div class="barra-preview" style="background:linear-gradient(90deg,#ff6b6b,#ffd93d,#6bcb77,#4d96ff,#c77dff)" aria-hidden="true"></div>
                         <span>Arco&shy;íris</span>
                     </div>
-                    <div class="free-barra-opt" data-barra="none" onclick="setBarra('none', this)">
-                        <div class="barra-preview" style="background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18)"></div>
+                    <div class="free-barra-opt" data-barra="none" onclick="setBarra('none', this)" role="button" tabindex="0" aria-pressed="false">
+                        <div class="barra-preview" style="background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18)" aria-hidden="true"></div>
                         <span>Sin barra</span>
                     </div>
                 </div>
@@ -716,17 +717,17 @@
 
                 <!-- FORMA -->
                 <div class="free-section-label">Forma</div>
-                <div class="free-shape-opts">
-                    <div class="free-shape-opt active" data-radius="18px" onclick="setShape('18px', this)">
-                        <div class="shape-preview" style="border-radius:18px"></div>
+                <div class="free-shape-opts" role="group" aria-label="Forma de la tarjeta">
+                    <div class="free-shape-opt active" data-radius="18px" onclick="setShape('18px', this)" role="button" tabindex="0" aria-pressed="true">
+                        <div class="shape-preview" style="border-radius:18px" aria-hidden="true"></div>
                         <span>Normal</span>
                     </div>
-                    <div class="free-shape-opt" data-radius="28px" onclick="setShape('28px', this)">
-                        <div class="shape-preview" style="border-radius:28px"></div>
+                    <div class="free-shape-opt" data-radius="28px" onclick="setShape('28px', this)" role="button" tabindex="0" aria-pressed="false">
+                        <div class="shape-preview" style="border-radius:28px" aria-hidden="true"></div>
                         <span>Muy redon&shy;deada</span>
                     </div>
-                    <div class="free-shape-opt" data-radius="6px" onclick="setShape('6px', this)">
-                        <div class="shape-preview" style="border-radius:6px"></div>
+                    <div class="free-shape-opt" data-radius="6px" onclick="setShape('6px', this)" role="button" tabindex="0" aria-pressed="false">
+                        <div class="shape-preview" style="border-radius:6px" aria-hidden="true"></div>
                         <span>Cuadrada</span>
                     </div>
                 </div>
@@ -803,7 +804,7 @@
 
                             <div class="front-body">
                                 <div class="photo-area">
-                                    <div class="photo-box" onclick="triggerFreePhoto(event)" title="Toca para agregar foto">
+                                    <div class="photo-box" onclick="triggerFreePhoto(event)" role="button" tabindex="0" aria-label="Agregar foto">
                                         <img id="free-photo-img" src="" alt="Foto">
                                         <div class="photo-hint" id="free-photo-hint">
                                             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
@@ -870,7 +871,7 @@
         <button class="free-btn-reset" onclick="resetAll()">Resetear todo</button>
     </div>
 
-</div><!-- /.free-page -->
+</main><!-- /.free-page -->
 
 <script src="js/utils.js"></script>
 <script src="js/generador-libre.js"></script>

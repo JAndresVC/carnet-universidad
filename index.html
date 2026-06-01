@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Acceso · ULACIT</title>
@@ -143,6 +143,8 @@
     </style>
 </head>
 <body>
+<main>
+<h1 class="sr-only">Acceso · Carné Digital ULACIT</h1>
     <div class="login-card">
         <div class="login-brand">
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
@@ -155,11 +157,22 @@
         </div>
         <div class="login-title">Acceso privado</div>
         <div class="login-subtitle">Carné del titular</div>
+        <label class="sr-only" for="input-usuario">Usuario</label>
         <input type="text" id="input-usuario" class="login-input" placeholder="Usuario" autocomplete="username" autocapitalize="none">
+        <label class="sr-only" for="input-contrasena">Contraseña</label>
         <input type="password" id="input-contrasena" class="login-input" placeholder="Contraseña" autocomplete="current-password">
         <button id="btn-login" class="login-btn">Ingresar</button>
         <div id="login-error" class="login-error" role="alert" aria-live="polite"></div>
     </div>
+</main>
     <script src="js/login.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('button svg').forEach(function (svg) {
+                svg.setAttribute('aria-hidden', 'true');
+                svg.setAttribute('focusable', 'false');
+            });
+        });
+    </script>
 </body>
 </html>

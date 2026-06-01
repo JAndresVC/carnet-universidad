@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Generador ULACIT · Carné Digital</title>
     <link rel="stylesheet" href="css/styles.css">
@@ -253,7 +253,8 @@
     <button class="nav-logout" onclick="sessionStorage.removeItem('ulacit_auth'); location.href='index.html';">Cerrar sesión</button>
 </nav>
 
-<div class="gen-page">
+<main class="gen-page">
+<h1 class="sr-only">Generador ULACIT · Carné Digital</h1>
     <div class="gen-layout">
 
         <!-- ════════════════ FORMULARIO ════════════════ -->
@@ -393,7 +394,7 @@
 
                             <div class="front-body">
                                 <div class="photo-area">
-                                    <div class="photo-box" onclick="triggerGenPhoto(event)" title="Toca para agregar foto">
+                                    <div class="photo-box" onclick="triggerGenPhoto(event)" role="button" tabindex="0" aria-label="Agregar foto">
                                         <img id="photo-img" src="" alt="Foto">
                                         <div class="photo-hint" id="photo-hint">
                                             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
@@ -440,7 +441,7 @@
         </div><!-- /.gen-preview-col -->
 
     </div><!-- /.gen-layout -->
-</div><!-- /.gen-page -->
+</main><!-- /.gen-page -->
 
 <script src="js/utils.js"></script>
 <script src="js/generador-ulacit.js"></script>

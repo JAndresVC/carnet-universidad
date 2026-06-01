@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-05-31T00:00:00Z",
+  "title": "Design System: Carné Digital ULACIT",
+  "extensions": {
+    "colorMeta": {
+      "void-plum-deep":   { "role": "primary",   "displayName": "Void Plum Deep",   "canonical": "oklch(4% 0.008 292)",  "tonalRamp": ["oklch(4% 0.008 292)","oklch(8% 0.02 292)","oklch(14% 0.04 292)","oklch(22% 0.06 292)","oklch(34% 0.08 292)","oklch(48% 0.10 292)","oklch(64% 0.09 292)","oklch(82% 0.04 292)"] },
+      "void-plum-body":   { "role": "primary",   "displayName": "Void Plum Body",   "canonical": "oklch(9% 0.04 292)",  "tonalRamp": ["oklch(4% 0.008 292)","oklch(9% 0.04 292)","oklch(16% 0.05 292)","oklch(24% 0.07 292)","oklch(36% 0.09 292)","oklch(50% 0.11 292)","oklch(66% 0.09 292)","oklch(84% 0.04 292)"] },
+      "void-plum-card":   { "role": "primary",   "displayName": "Void Plum Card",   "canonical": "oklch(17% 0.063 292)", "tonalRamp": ["oklch(6% 0.02 292)","oklch(12% 0.04 292)","oklch(17% 0.063 292)","oklch(26% 0.08 292)","oklch(38% 0.10 292)","oklch(52% 0.12 292)","oklch(68% 0.10 292)","oklch(86% 0.05 292)"] },
+      "void-plum-rich":   { "role": "primary",   "displayName": "Void Plum Rich",   "canonical": "oklch(22% 0.075 292)", "tonalRamp": ["oklch(8% 0.02 292)","oklch(14% 0.05 292)","oklch(22% 0.075 292)","oklch(30% 0.09 292)","oklch(42% 0.11 292)","oklch(56% 0.12 292)","oklch(72% 0.10 292)","oklch(88% 0.05 292)"] },
+      "interface-violet": { "role": "secondary", "displayName": "Interface Violet", "canonical": "oklch(47% 0.13 291)",  "tonalRamp": ["oklch(12% 0.04 291)","oklch(20% 0.07 291)","oklch(28% 0.10 291)","oklch(38% 0.12 291)","oklch(47% 0.13 291)","oklch(58% 0.13 291)","oklch(70% 0.11 291)","oklch(84% 0.06 291)"] },
+      "soft-lavender":    { "role": "secondary", "displayName": "Soft Lavender",    "canonical": "oklch(67% 0.14 288)",  "tonalRamp": ["oklch(14% 0.04 288)","oklch(22% 0.07 288)","oklch(32% 0.10 288)","oklch(44% 0.13 288)","oklch(56% 0.14 288)","oklch(67% 0.14 288)","oklch(78% 0.11 288)","oklch(90% 0.05 288)"] },
+      "lavender-frost":   { "role": "neutral",   "displayName": "Lavender Frost",   "canonical": "oklch(95% 0.015 295)", "tonalRamp": ["oklch(18% 0.01 295)","oklch(28% 0.01 295)","oklch(40% 0.01 295)","oklch(54% 0.01 295)","oklch(67% 0.01 295)","oklch(78% 0.01 295)","oklch(88% 0.012 295)","oklch(95% 0.015 295)"] },
+      "validity-amber":   { "role": "tertiary",  "displayName": "Validity Amber",   "canonical": "oklch(71% 0.11 82)",   "tonalRamp": ["oklch(18% 0.05 82)","oklch(28% 0.07 82)","oklch(38% 0.09 82)","oklch(50% 0.11 82)","oklch(60% 0.12 82)","oklch(71% 0.11 82)","oklch(82% 0.08 82)","oklch(93% 0.04 82)"] },
+      "text-white":       { "role": "neutral",   "displayName": "Text White",       "canonical": "oklch(100% 0 0)",      "tonalRamp": ["oklch(10% 0 0)","oklch(22% 0 0)","oklch(36% 0 0)","oklch(50% 0 0)","oklch(65% 0 0)","oklch(78% 0 0)","oklch(90% 0 0)","oklch(100% 0 0)"] },
+      "error-rose":       { "role": "tertiary",  "displayName": "Error Rose",       "canonical": "oklch(72% 0.16 21)",   "tonalRamp": ["oklch(18% 0.06 21)","oklch(28% 0.09 21)","oklch(40% 0.12 21)","oklch(52% 0.14 21)","oklch(62% 0.15 21)","oklch(72% 0.16 21)","oklch(82% 0.12 21)","oklch(92% 0.06 21)"] },
+      "icon-blue":        { "role": "brand",     "displayName": "ULACIT Icon Blue",  "canonical": "oklch(50% 0.18 264)",  "tonalRamp": ["oklch(14% 0.07 264)","oklch(24% 0.11 264)","oklch(34% 0.14 264)","oklch(44% 0.17 264)","oklch(50% 0.18 264)","oklch(62% 0.17 264)","oklch(74% 0.14 264)","oklch(88% 0.07 264)"] },
+      "icon-green":       { "role": "brand",     "displayName": "ULACIT Icon Green", "canonical": "oklch(70% 0.18 152)",  "tonalRamp": ["oklch(18% 0.07 152)","oklch(28% 0.10 152)","oklch(40% 0.14 152)","oklch(52% 0.17 152)","oklch(60% 0.18 152)","oklch(70% 0.18 152)","oklch(80% 0.14 152)","oklch(92% 0.07 152)"] },
+      "icon-lime":        { "role": "brand",     "displayName": "ULACIT Icon Lime",  "canonical": "oklch(76% 0.20 130)",  "tonalRamp": ["oklch(18% 0.07 130)","oklch(28% 0.10 130)","oklch(40% 0.14 130)","oklch(54% 0.18 130)","oklch(64% 0.20 130)","oklch(76% 0.20 130)","oklch(84% 0.15 130)","oklch(93% 0.08 130)"] },
+      "icon-orange":      { "role": "brand",     "displayName": "ULACIT Icon Orange","canonical": "oklch(66% 0.19 42)",   "tonalRamp": ["oklch(16% 0.06 42)","oklch(26% 0.10 42)","oklch(38% 0.14 42)","oklch(50% 0.17 42)","oklch(58% 0.18 42)","oklch(66% 0.19 42)","oklch(78% 0.15 42)","oklch(90% 0.08 42)"] }
+    },
+    "typographyMeta": {
+      "headline":  { "displayName": "Headline",  "purpose": "Login page title and page-level headings. Largest type in the system. Rarely used outside the login screen." },
+      "card-name": { "displayName": "Card Name", "purpose": "Card student name field. Smaller than Headline but heavier (800 weight) — authority through density, not size." },
+      "title":    { "displayName": "Title",    "purpose": "Card field values, ID number. font-variant-numeric: tabular-nums on numeric fields." },
+      "body":     { "displayName": "Body",     "purpose": "Button labels, nav links, form input text. The floor of legible UI chrome." },
+      "label":    { "displayName": "Label",    "purpose": "Card field labels, form section headers, badge text. ALL CAPS always. Never for body content." }
+    },
+    "shadows": [
+      {
+        "name": "card-float",
+        "value": "0 20px 50px rgba(44,27,69,0.6), 0 4px 16px rgba(0,0,0,0.5)",
+        "purpose": "Reserved exclusively for the ID card. The violet-tinted outer glow ties the shadow to the card's own gradient color."
+      }
+    ],
+    "motion": [
+      { "name": "ease-standard",   "value": "cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Default easing for state transitions (buttons, inputs, nav links). 0.2s duration." },
+      { "name": "ease-fast",       "value": "cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Quick micro-interactions (font selector, barra option). 0.15s duration." },
+      { "name": "ease-card-flip",  "value": "cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Card 3D flip (currently disabled). 0.75s duration." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "440px", "note": "Card switches from fixed 400px to calc(100vw - 32px) at this breakpoint." },
+      { "name": "tablet", "value": "768px", "note": "Free generator switches from 3-column to single-column stacked layout." }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button (Download)",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The main action below the ID card preview. Pale pill shape — maximum contrast against near-black background.",
+      "html": "<button class=\"ds-btn-primary\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4\"/><polyline points=\"7 10 12 15 17 10\"/><line x1=\"12\" y1=\"15\" x2=\"12\" y2=\"3\"/></svg> Descargar PNG</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 7px; padding: 11px 20px; border-radius: 50px; border: none; font-size: 13px; font-weight: 600; cursor: pointer; background: #F0EBF8; color: #2C1B45; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; transition: background 0.2s, transform 0.2s, box-shadow 0.2s; } .ds-btn-primary:hover { background: #ffffff; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(200,168,76,0.3); } .ds-btn-primary:active { transform: translateY(0); }"
+    },
+    {
+      "name": "Login Button",
+      "kind": "button",
+      "refersTo": "button-login",
+      "description": "Full-width form primary action on the login screen. Filled purple — assertive, belongs to the form grid.",
+      "html": "<button class=\"ds-btn-login\">Ingresar</button>",
+      "css": ".ds-btn-login { width: 100%; background: #5B3A9E; color: #ffffff; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; padding: 13px; cursor: pointer; transition: background 0.2s, transform 0.15s; box-sizing: border-box; } .ds-btn-login:hover { background: #6d49b8; transform: translateY(-1px); } .ds-btn-login:active { transform: translateY(0); }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action. Transparent with faint border — recedes into the dark background, used for optional actions.",
+      "html": "<button class=\"ds-btn-ghost\">Apple Wallet</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; gap: 7px; padding: 11px 20px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15); font-size: 13px; font-weight: 600; cursor: pointer; background: rgba(255,255,255,0.07); color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; transition: background 0.2s, transform 0.2s; } .ds-btn-ghost:hover { background: rgba(255,255,255,0.12); transform: translateY(-1px); } .ds-btn-ghost:active { transform: translateY(0); }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input-default",
+      "description": "Form text field. Recessed glass look — nearly invisible at rest, Interface Violet border on focus.",
+      "html": "<div class=\"ds-field\"><label class=\"ds-label\">Nombre completo</label><input class=\"ds-input\" type=\"text\" placeholder=\"Ej: María González\"></div>",
+      "css": ".ds-field { display: flex; flex-direction: column; gap: 4px; } .ds-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.3px; color: rgba(255,255,255,0.35); font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; } .ds-input { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #ffffff; font-size: 12px; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; padding: 7px 9px; outline: none; box-sizing: border-box; transition: border-color 0.2s, background 0.2s; } .ds-input::placeholder { color: rgba(255,255,255,0.20); } .ds-input:focus { border-color: rgba(124,93,200,0.55); background: rgba(255,255,255,0.08); }"
+    },
+    {
+      "name": "Navigation Bar",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Sticky top nav. Dark glass bar with tonal bottom border. Active link shown with Soft Lavender bottom indicator.",
+      "html": "<nav class=\"ds-nav\"><div class=\"ds-nav-brand\"><svg width=\"28\" height=\"28\" viewBox=\"0 0 28 28\" fill=\"none\"><rect x=\"0\" y=\"0\" width=\"13\" height=\"13\" rx=\"2\" fill=\"#564394\"/><rect x=\"15\" y=\"0\" width=\"13\" height=\"13\" rx=\"2\" fill=\"#0689A7\"/><rect x=\"0\" y=\"15\" width=\"13\" height=\"13\" rx=\"2\" fill=\"#95C11F\"/><rect x=\"15\" y=\"15\" width=\"13\" height=\"13\" rx=\"2\" fill=\"#E9531E\"/></svg><span class=\"ds-nav-name\">ULACIT</span><span class=\"ds-nav-sub\">carnés digitales</span></div><ul class=\"ds-nav-links\"><li><a href=\"#\" class=\"ds-nav-link\">Mi carné</a></li><li><a href=\"#\" class=\"ds-nav-link ds-nav-link--active\">Generador libre</a></li></ul></nav>",
+      "css": ".ds-nav { position: relative; width: 100%; height: 52px; background: #1a0d30; border-bottom: 1px solid rgba(124,93,200,0.25); display: flex; align-items: center; padding: 0 20px; gap: 32px; box-sizing: border-box; } .ds-nav-brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; } .ds-nav-name { font-size: 15px; font-weight: 700; color: #ffffff; letter-spacing: 1px; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; } .ds-nav-sub { font-size: 10px; color: rgba(255,255,255,0.4); font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; } .ds-nav-links { display: flex; align-items: center; gap: 4px; list-style: none; margin: 0; padding: 0; } .ds-nav-link { display: inline-block; padding: 6px 14px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.38); text-decoration: none; border-bottom: 2px solid transparent; height: 52px; line-height: 40px; transition: color 0.15s, border-color 0.15s; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; } .ds-nav-link:hover { color: rgba(255,255,255,0.70); } .ds-nav-link--active { color: #ffffff; border-bottom-color: #a78bfa; }"
+    },
+    {
+      "name": "Form Panel",
+      "kind": "card",
+      "refersTo": "button-ghost",
+      "description": "The dark glass container grouping form fields. Darker than inputs, same opacity-layering language.",
+      "html": "<div class=\"ds-form-panel\"><div class=\"ds-form-title\">Datos del carné</div><div class=\"ds-form-content\">fields go here</div></div>",
+      "css": ".ds-form-panel { background: #1a0d30; border: 1px solid rgba(124,93,200,0.22); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px; } .ds-form-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.38); font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; } .ds-form-content { display: flex; flex-direction: column; gap: 12px; }"
+    },
+    {
+      "name": "Badge Pill",
+      "kind": "chip",
+      "refersTo": "button-primary",
+      "description": "Institution type marker in the card header. Off-white pill with tiny uppercase text — reads as an official stamp.",
+      "html": "<span class=\"ds-badge\">Estudiante</span>",
+      "css": ".ds-badge { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.8px; color: #2C1B45; background: #F0EBF8; padding: 4px 10px; border-radius: 20px; display: inline-block; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; }"
+    },
+    {
+      "name": "ID Card",
+      "kind": "custom",
+      "refersTo": "button-primary",
+      "description": "The primary artifact — the exported digital student ID. Every other component serves this one.",
+      "html": "<div class=\"ds-card-scene\"><div class=\"ds-card-front\"><div class=\"ds-card-colorbar\"></div><div class=\"ds-card-content\"><div class=\"ds-card-header\"><span class=\"ds-card-inst\">ULACIT</span><span class=\"ds-badge\">Estudiante</span></div><div class=\"ds-card-body\"><div class=\"ds-card-photo\"></div><div class=\"ds-card-info\"><div class=\"ds-card-field\"><span class=\"ds-field-lbl\">Titular</span><span class=\"ds-field-val ds-field-val--name\">María González</span></div><div class=\"ds-card-field\"><span class=\"ds-field-lbl\">Programa</span><span class=\"ds-field-val\">Bach. Ingeniería en Sistemas</span></div></div></div><div class=\"ds-card-footer\"><div><span class=\"ds-field-lbl\" style=\"font-size:6.5px\">ID</span><span class=\"ds-id-number\">1-2345-6789</span></div><div style=\"text-align:right\"><span class=\"ds-field-lbl\" style=\"font-size:6.5px\">Válido desde — hasta:</span><span class=\"ds-validity\">Enero 2023 — Dic 2027</span></div></div></div></div></div>",
+      "css": ".ds-card-scene { width: 400px; height: 252px; position: relative; } .ds-card-front { position: absolute; inset: 0; border-radius: 18px; overflow: hidden; background: linear-gradient(145deg, #2C1B45 0%, #3a2260 40%, #3D2565 100%); box-shadow: 0 20px 50px rgba(44,27,69,0.6), 0 4px 16px rgba(0,0,0,0.5); isolation: isolate; } .ds-card-front::before { content: ''; position: absolute; inset: 0; background: linear-gradient(165deg, rgba(255,255,255,0.07) 0%, transparent 45%); border-radius: 18px; pointer-events: none; z-index: 20; } .ds-card-colorbar { position: absolute; bottom: 0; left: 0; right: 0; height: 5px; background: linear-gradient(90deg, #5B55D6 0%, #5B55D6 25%, #2EBD6E 25%, #2EBD6E 50%, #7CC840 50%, #7CC840 75%, #F07840 75%, #F07840 100%); z-index: 10; } .ds-card-content { position: relative; z-index: 5; height: 100%; display: flex; flex-direction: column; padding: 16px 18px 22px; } .ds-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; } .ds-card-inst { font-size: 15px; font-weight: 800; color: white; letter-spacing: 0.3px; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; } .ds-badge { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.8px; color: #2C1B45; background: #F0EBF8; padding: 4px 10px; border-radius: 20px; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; } .ds-card-body { display: flex; gap: 14px; flex: 1; min-height: 0; } .ds-card-photo { flex-shrink: 0; width: 76px; height: 95px; border-radius: 10px; background: rgba(255,255,255,0.07); border: 1.5px solid rgba(255,255,255,0.15); } .ds-card-info { flex: 1; display: flex; flex-direction: column; gap: 7px; min-width: 0; } .ds-card-field { display: flex; flex-direction: column; gap: 1px; } .ds-field-lbl { font-size: 7.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.4px; color: #7C5DC8; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; } .ds-field-val { font-size: 14px; font-weight: 700; color: #ffffff; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; } .ds-field-val--name { font-size: 16px; font-weight: 800; letter-spacing: 0.2px; } .ds-card-footer { display: flex; justify-content: space-between; align-items: flex-end; padding-top: 9px; border-top: 1px solid rgba(255,255,255,0.08); flex-shrink: 0; } .ds-id-number { font-size: 14px; font-weight: 700; color: white; letter-spacing: 1.5px; font-variant-numeric: tabular-nums; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; display: block; } .ds-validity { font-size: 10px; font-weight: 800; color: #c8a84c; letter-spacing: 0.5px; display: block; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Carbon Copy",
+    "overview": "Precision-made replica of something institutional, hand-crafted. The interface exists to produce one artifact: a document that looks indistinguishable from an official institutional credential. Every UI decision defers to the card. Surrounding chrome dissolves into the near-black background, leaving only the card as a three-dimensional object suspended in darkness.\n\nThe system runs on two opposing forces held in deliberate tension: the near-void background eliminates all visual noise, while the card itself is richly crafted — gradient depth, shadow, micro-detail in typography, a gold validity date, the ULACIT colorbar as a precise institutional signal. The darkness is the silence that makes the card speak.\n\nThis system explicitly rejects: government-portal stiffness (heavy borders, bureaucratic form grids); Bootstrap default (undesigned scaffolding, visible framework bones); generic SaaS purple (the kind saturating dashboards and landing pages everywhere).",
+    "keyCharacteristics": [
+      "Near-void backgrounds make the card the only foreground object",
+      "Two-layer logic: the page is infrastructure, the card is product",
+      "System sans at every scale — no decorative typefaces, no expressive weight shifts outside the card",
+      "Labels reduced to near-invisible status markers (ALL CAPS, tiny, 35–38% opacity)",
+      "Interactions feel mechanical: crisp focus states, direct 0.15–0.2s transitions, no bounce or elastic"
+    ],
+    "rules": [
+      { "name": "The Amber Lock Rule",       "body": "Validity Amber (#c8a84c) appears on exactly one element in the entire system: the card's validity date text. Adding it anywhere else destroys the scarcity signal that gives it authority. Prohibited.",                                 "section": "colors" },
+      { "name": "The Quad Separation Rule",  "body": "The four ULACIT icon colors are brand property, not design system tokens. Use them only in the logo SVG and the ULACIT colorbar. Never as button fills, badge backgrounds, or hover states.",                                   "section": "colors" },
+      { "name": "The Weight-Only Hierarchy Rule", "body": "All type is from the same family at every scale. Distinguish levels through size and weight, never through font switching. A serif accent, display typeface, or mono body would break the system's precision character.", "section": "typography" },
+      { "name": "The Card-Only Float Rule",  "body": "The box-shadow float treatment is exclusive to the ID card. All other surfaces — form panels, dropdowns, tooltips, modals — must use opacity-layered backgrounds instead. If you reach for box-shadow on anything other than the card, stop.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use the #1a0d30 → #060410 background spectrum. The near-void body makes the card float.",
+      "Do keep Validity Amber (#c8a84c) on the card date field exclusively — one token, one purpose.",
+      "Do use opacity-layered surfaces (rgba(255,255,255,0.04–0.10)) for all UI panels.",
+      "Do apply the Card Float shadow (0 20px 50px rgba(44,27,69,0.6), 0 4px 16px rgba(0,0,0,0.5)) to the ID card exclusively.",
+      "Do write all labels at ALL CAPS with 1.3–1.8px letter-spacing.",
+      "Do use Soft Lavender (#a78bfa) for interactive active states only. Never as a background fill on large surfaces.",
+      "Do use font-variant-numeric: tabular-nums on the ID number and any numerical code fields.",
+      "Do keep all transitions between 0.15s and 0.2s."
+    ],
+    "donts": [
+      "Don't use heavy borders, stiff form grids, or side-stripe accent borders. This is not a government portal.",
+      "Don't use Bootstrap-default aesthetics — visible scaffolding, generic rounded rectangles with flat-blue fills.",
+      "Don't use generic SaaS purple — light purple on white, hero sections with stat numbers, identical card grids.",
+      "Don't apply box-shadow to anything except the ID card. Form panels, buttons, inputs: flat, always.",
+      "Don't use gradient text (background-clip: text + gradient). Validity Amber is a solid color; the constraint is the point.",
+      "Don't use the ULACIT icon quad colors (#5B55D6, #2EBD6E, #7CC840, #F07840) as UI chrome.",
+      "Don't add a second box-shadow to the card or modify the existing violet-tinted outer glow.",
+      "Don't lower the card's background opacity. The card is the export artifact; it must be fully opaque.",
+      "Don't use saturated red (#ef4444) for errors. Error Rose (#f87171) only.",
+      "Don't increase the background pattern SVG opacity above 4%. It is a texture, not a visible graphic."
+    ]
+  }
+}

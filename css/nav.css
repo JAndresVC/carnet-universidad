@@ -125,3 +125,99 @@ body:has(.ulacit-nav) .wallet-panel {
 body:has(.ulacit-nav) > *:not(.ulacit-nav):first-of-type {
     margin-top: 0;
 }
+
+/* ── Hamburger button ── */
+.nav-hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    margin-left: auto;
+    color: rgba(255, 255, 255, 0.7);
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 8px;
+    transition: background 0.15s, color 0.15s;
+    height: 52px;
+    width: 44px;
+}
+
+.nav-hamburger:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+}
+
+.nav-hamburger:focus-visible {
+    outline: 2px solid #a78bfa;
+    outline-offset: 2px;
+}
+
+.nav-hamburger .icon-close { display: none; }
+.nav-open .nav-hamburger .icon-close { display: block; }
+.nav-open .nav-hamburger .icon-menu { display: none; }
+
+/* ── Mobile nav ── */
+@media (max-width: 720px) {
+    .ulacit-nav {
+        height: auto;
+        flex-wrap: wrap;
+        padding: 0 16px;
+        gap: 0;
+    }
+
+    .nav-brand {
+        height: 52px;
+        flex: 1;
+    }
+
+    .nav-hamburger {
+        display: flex;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 0;
+        padding: 4px 0 8px;
+        border-top: 1px solid rgba(124, 93, 200, 0.2);
+        flex: unset;
+    }
+
+    .nav-open .nav-links {
+        display: flex;
+    }
+
+    .nav-link {
+        height: auto;
+        line-height: 1;
+        padding: 13px 8px;
+        border-bottom: none;
+        border-left: 2px solid transparent;
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .nav-link:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-link.active {
+        border-bottom-color: transparent;
+        border-left-color: #a78bfa;
+        color: #ffffff;
+    }
+
+    .nav-logout {
+        display: none;
+        margin: 8px 8px 4px;
+        width: calc(100% - 16px);
+        text-align: center;
+    }
+
+    .nav-open .nav-logout {
+        display: block;
+    }
+}

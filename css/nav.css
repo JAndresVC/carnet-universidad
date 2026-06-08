@@ -209,6 +209,18 @@ body:has(.ulacit-nav) > *:not(.ulacit-nav):first-of-type {
         color: #ffffff;
     }
 
+    .nav-link.active:hover {
+        background: rgba(167, 139, 250, 0.18);
+    }
+
+    .nav-link:focus-visible {
+        outline-offset: 2px;
+    }
+
+    .nav-brand-sub {
+        display: none;
+    }
+
     .nav-logout {
         display: none;
         margin: 4px 6px 6px;
@@ -220,5 +232,13 @@ body:has(.ulacit-nav) > *:not(.ulacit-nav):first-of-type {
 
     .nav-open .nav-logout {
         display: flex;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nav-link,
+    .nav-logout,
+    .nav-hamburger {
+        transition: none;
     }
 }

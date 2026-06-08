@@ -180,8 +180,8 @@ body:has(.ulacit-nav) > *:not(.ulacit-nav):first-of-type {
         display: none;
         flex-direction: column;
         width: 100%;
-        gap: 0;
-        padding: 4px 0 8px;
+        gap: 2px;
+        padding: 4px 6px 10px;
         border-top: 1px solid rgba(124, 93, 200, 0.2);
         flex: unset;
     }
@@ -193,9 +193,9 @@ body:has(.ulacit-nav) > *:not(.ulacit-nav):first-of-type {
     .nav-link {
         height: auto;
         line-height: 1;
-        padding: 13px 8px;
-        border-bottom: none;
-        border-left: 2px solid transparent;
+        padding: 15px 10px;
+        border: none;
+        border-radius: 6px;
         width: 100%;
         font-size: 14px;
     }
@@ -205,19 +205,20 @@ body:has(.ulacit-nav) > *:not(.ulacit-nav):first-of-type {
     }
 
     .nav-link.active {
-        border-bottom-color: transparent;
-        border-left-color: #a78bfa;
+        background: rgba(167, 139, 250, 0.12);
         color: #ffffff;
     }
 
     .nav-logout {
         display: none;
-        margin: 8px 8px 4px;
-        width: calc(100% - 16px);
-        text-align: center;
+        margin: 4px 6px 6px;
+        width: calc(100% - 12px);
+        min-height: 44px;
+        align-items: center;
+        justify-content: center;
     }
 
     .nav-open .nav-logout {
-        display: block;
+        display: flex;
     }
 }
